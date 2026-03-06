@@ -1,4 +1,5 @@
 :root {
+  /* default = dark theme values */
   --bg: #050716;
   --bg-alt: #070a1d;
   --bg-elevated: #0b0f28;
@@ -11,8 +12,8 @@
   --shadow-soft: 0 18px 60px rgba(0, 0, 0, 0.6);
 }
 
-/* Light theme */
-body.light {
+/* explicit light theme overrides */
+body.theme-light {
   --bg: #f5f7ff;
   --bg-alt: #ffffff;
   --bg-elevated: #ffffff;
@@ -20,6 +21,17 @@ body.light {
   --muted: #4b5563;
   --border: rgba(0, 0, 0, 0.08);
   --shadow-soft: 0 14px 40px rgba(15, 23, 42, 0.15);
+}
+
+/* explicit dark theme (same as default) */
+body.theme-dark {
+  --bg: #050716;
+  --bg-alt: #070a1d;
+  --bg-elevated: #0b0f28;
+  --text: #f7f7ff;
+  --muted: #9ca3c7;
+  --border: rgba(255, 255, 255, 0.06);
+  --shadow-soft: 0 18px 60px rgba(0, 0, 0, 0.6);
 }
 
 *,
@@ -46,7 +58,8 @@ body {
 
 body {
   font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  background: radial-gradient(circle at top, #1a1440 0, #050716 45%, #02010a 100%);
+  background:
+    radial-gradient(circle at top, rgba(26, 20, 64, 0.9) 0, var(--bg) 45%, #02010a 100%);
   color: var(--text);
   overflow-x: hidden;
 }
@@ -225,11 +238,14 @@ body:active .cursor-ring {
 }
 
 .theme-icon {
+  font-size: 0.75rem;
   opacity: 0.35;
+  transition: opacity 0.2s ease-out;
 }
 
-body.light .theme-icon.theme-light,
-body:not(.light) .theme-icon.theme-dark {
+/* show the right label depending on theme */
+body.theme-dark .theme-icon.theme-dark,
+body.theme-light .theme-icon.theme-light {
   opacity: 1;
 }
 
@@ -384,6 +400,31 @@ body:not(.light) .theme-icon.theme-dark {
   font-size: 0.78rem;
 }
 
+/* Theme controls */
+.theme-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.8rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.accent-swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.accent-swatch[data-accent="#7b5cff"] { background: #7b5cff; }
+.accent-swatch[data-accent="#22c55e"] { background: #22c55e; }
+.accent-swatch[data-accent="#f97316"] { background: #f97316; }
+.accent-swatch[data-accent="#e11d48"] { background: #e11d48; }
+
 /* Hero stats */
 .hero-stats {
   display: grid;
@@ -470,7 +511,7 @@ body:not(.light) .theme-icon.theme-dark {
   background-position: center;
 }
 
-/* Fake thumbnails with gradients (swap with real images later) */
+/* Fake thumbnails */
 .game-thumb-1 { background: linear-gradient(135deg, #38bdf8, #0f172a); }
 .game-thumb-2 { background: linear-gradient(135deg, #22c55e, #14532d); }
 .game-thumb-3 { background: linear-gradient(135deg, #f97316, #7c2d12); }
