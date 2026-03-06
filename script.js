@@ -4,20 +4,64 @@ const cursorRing = document.getElementById("cursor-ring");
 
 window.addEventListener("pointermove", (e) => {
   const { clientX, clientY } = e;
-  cursorDot.style.transform = `translate(${clientX}px, ${clientY}px)`;
-  cursorRing.style.transform = `translate(${clientX}px, ${clientY}px)`;
+  if (cursorDot) cursorDot.style.transform = `translate(${clientX}px, ${clientY}px)`;
+  if (cursorRing) cursorRing.style.transform = `translate(${clientX}px, ${clientY}px)`;
 });
 
-// Theme toggle
-const toggle = document.getElementById("theme-toggle");
-if (toggle) {
-  const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
-  if (prefersLight) document.body.classList.add("light");
+// Theme toggle with persistent setting
+const themeToggleBtn = document.getElementById("theme-toggle");
 
-  toggle.addEventListener("click", () => {
-    document.body.classList.toggle("light");
+function getPreferredTheme() {
+  const stored = localStorage.getItem("king-theme");
+  if (stored === "light" || stored === "dark") return stored;
+
+  const prefersDark = window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
+  return prefersDark ? "dark" : "light";
+}
+
+function applyTheme(theme) {
+  document.body.classList.remove("theme-dark", "theme-light");
+  document.body.classList.add(theme === "dark" ? "theme-dark" : "theme-light");
+}
+
+// initialize theme
+const initialTheme = getPreferredTheme();
+applyTheme(initialTheme);
+
+if (themeToggleBtn) {
+  themeToggleBtn.addEventListener("click", () => {
+    const current = document.body.classList.contains("theme-dark") ? "dark" : "light";
+    const next = current === "dark" ? "light" : "dark";
+    applyTheme(next);
+    localStorage.setItem("king-theme", next);
   });
 }
+
+// Accent color customization
+const accentButtons = document.querySelectorAll(".accent-swatch");
+
+function setAccent(color) {
+  // base accent
+  document.documentElement.style.setProperty("--accent", color);
+  // soft accent with alpha; if browser does not support this hex+alpha,
+  // you can replace it with a fixed rgba in the CSS
+  document.documentElement.style.setProperty("--accent-soft", color + "40");
+  localStorage.setItem("king-accent", color);
+}
+
+// load stored accent
+const savedAccent = localStorage.getItem("king-accent");
+if (savedAccent) {
+  setAccent(savedAccent);
+}
+
+accentButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const color = btn.dataset.accent;
+    if (color) setAccent(color);
+  });
+});
 
 // Mobile nav
 const navMenu = document.getElementById("nav-menu");
@@ -48,7 +92,7 @@ document.querySelectorAll(".nav-link, .scroll-link").forEach((link) => {
   });
 });
 
-// Active nav links on scroll (single‑page version)
+// Active nav links on scroll
 const sections = document.querySelectorAll("section");
 const navLinks = document.querySelectorAll(".nav-link");
 
