@@ -146,15 +146,20 @@ body:active .cursor-ring {
 }
 
 .logo-icon {
-  width: 26px;
-  height: 26px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
+  width: 32px;
+  height: 24px;
+  border-radius: 10px;
   background: radial-gradient(circle at top left, var(--accent), var(--accent-2));
   box-shadow: 0 0 18px rgba(123, 92, 255, 0.6);
-  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-icon svg {
+  width: 24px;
+  height: 18px;
+  fill: #ffffff;
 }
 
 .logo-text {
@@ -394,7 +399,7 @@ body:not(.light) .theme-icon.theme-dark {
   box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
 }
 
-/* Hero panel cards */
+/* Hero panel */
 .hero-panel {
   position: relative;
 }
@@ -465,7 +470,7 @@ body:not(.light) .theme-icon.theme-dark {
   background-position: center;
 }
 
-/* Fake thumbnails with gradients (replace with images later) */
+/* Fake thumbnails with gradients (swap with real images later) */
 .game-thumb-1 { background: linear-gradient(135deg, #38bdf8, #0f172a); }
 .game-thumb-2 { background: linear-gradient(135deg, #22c55e, #14532d); }
 .game-thumb-3 { background: linear-gradient(135deg, #f97316, #7c2d12); }
