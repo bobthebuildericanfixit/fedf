@@ -1,433 +1,197 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Googuardiaan • CMD Learning Arcade</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-</head>
-<body>
-  <!-- Loading screen -->
-  <div class="loader" id="loader">
-    <div class="loader-orbit">
-      <span></span><span></span><span></span>
-    </div>
-    <p>Booting Googuardiaan Arcade...</p>
-  </div>
+// Loading screen
+window.addEventListener("load", () => {
+  const loader = document.getElementById("loader");
+  setTimeout(() => {
+    loader.style.opacity = "0";
+    loader.style.pointerEvents = "none";
+    setTimeout(() => loader.remove(), 400);
+  }, 1100);
+});
 
-  <!-- Custom neon cursor (real cursor hidden in CSS) -->
-  <div class="cursor-dot" id="cursor-dot"></div>
-  <div class="cursor-ring" id="cursor-ring"></div>
+// Custom cursor movement
+const cursorDot = document.getElementById("cursor-dot");
+const cursorRing = document.getElementById("cursor-ring");
 
-  <!-- Background glow/grid -->
-  <div class="bg-orbit"></div>
-  <div class="bg-grid"></div>
+window.addEventListener("pointermove", (e) => {
+  const { clientX, clientY } = e;
+  cursorDot.style.transform = `translate(${clientX}px, ${clientY}px)`;
+  cursorRing.style.transform = `translate(${clientX}px, ${clientY}px)`;
+});
 
-  <div class="container">
-    <!-- NAVBAR -->
-    <header class="nav">
-      <div class="nav-left">
-        <div class="logo">
-          <span class="logo-icon">&gt;</span>
-          <span class="logo-text">Googuardiaan<span class="logo-blink">_</span></span>
-        </div>
-      </div>
-      <nav class="nav-links">
-        <a href="#hero" class="nav-link active">Home</a>
-        <a href="#about" class="nav-link">About</a>
-        <a href="#features" class="nav-link">Features</a>
-        <a href="#skills" class="nav-link">Skills</a>
-        <a href="#projects" class="nav-link">Labs</a>
-        <a href="#docs" class="nav-link">Docs</a>
-        <a href="#contact" class="nav-link">Contact</a>
-      </nav>
-      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-        <span class="theme-icon theme-dark">🌙</span>
-        <span class="theme-icon theme-light">☀️</span>
-      </button>
-      <button class="nav-menu" id="nav-menu">
-        <span></span><span></span><span></span>
-      </button>
-    </header>
+// Theme toggle (light/dark)
+const toggle = document.getElementById("theme-toggle");
+const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+if (prefersLight) document.body.classList.add("light");
 
-    <!-- MOBILE NAV -->
-    <nav class="nav-mobile" id="nav-mobile">
-      <a href="#hero" class="nav-link">Home</a>
-      <a href="#about" class="nav-link">About</a>
-      <a href="#features" class="nav-link">Features</a>
-      <a href="#skills" class="nav-link">Skills</a>
-      <a href="#projects" class="nav-link">Labs</a>
-      <a href="#docs" class="nav-link">Docs</a>
-      <a href="#contact" class="nav-link">Contact</a>
-    </nav>
+toggle.addEventListener("click", () => {
+  document.body.classList.toggle("light");
+});
 
-    <main>
-      <!-- HERO -->
-      <section id="hero" class="section hero">
-        <div class="hero-content">
-          <div class="hero-chip">CMD‑Style Program • Learning Arcade</div>
-          <h1 class="hero-title">
-            Learn how programs work<br />
-            by playing with a <span class="gradient-text">command prompt</span>.
-          </h1>
-          <p class="hero-subtitle">
-            Googuardiaan is a terminal‑inspired sandbox that teaches inputs, outputs,
-            control flow, and ethical reverse engineering in a safe environment.
-          </p>
-          <div class="hero-actions">
-            <a href="#projects" class="btn primary">Open Labs</a>
-            <a href="#docs" class="btn ghost">View Docs</a>
-          </div>
+// Mobile nav toggle
+const navMenu = document.getElementById("nav-menu");
+const navMobile = document.getElementById("nav-mobile");
+navMenu.addEventListener("click", () => {
+  navMobile.style.display =
+    navMobile.style.display === "flex" ? "none" : "flex";
+});
 
-          <div class="hero-stats">
-            <div class="stat-card">
-              <span class="stat-label">Mini‑labs</span>
-              <span class="stat-value">8+</span>
-              <span class="stat-foot">From basics to advanced puzzles</span>
-            </div>
-            <div class="stat-card">
-              <span class="stat-label">Game‑style</span>
-              <span class="stat-value">XP & Badges</span>
-              <span class="stat-foot">Progress by solving CMD quests</span>
-            </div>
-            <div class="stat-card">
-              <span class="stat-label">Focus</span>
-              <span class="stat-value">Safe & Ethical</span>
-              <span class="stat-foot">No bypassing, just understanding</span>
-            </div>
-          </div>
-        </div>
+// Active nav links on scroll
+const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll(".nav-link");
 
-        <!-- Animated terminal panel -->
-        <div class="hero-panel">
-          <div class="term-window">
-            <div class="term-header">
-              <div class="term-dots">
-                <span class="dot red"></span>
-                <span class="dot yellow"></span>
-                <span class="dot green"></span>
-              </div>
-              <span class="term-title">C:\Googuardiaan\arcade.exe</span>
-            </div>
-            <div class="term-body" id="terminal-body">
-              <div class="term-line">C:\User&gt; googuardiaan --intro</div>
-              <div class="term-line">Loading learning arcade...</div>
-              <div class="term-line">Type <span class="accent">help</span> to list safe labs.</div>
-              <div class="term-line blinking">C:\Arcade&gt; _</div>
-            </div>
-          </div>
+function setActiveLink() {
+  let current = "";
+  sections.forEach((section) => {
+    const top = window.scrollY;
+    const offset = section.offsetTop - 120;
+    const height = section.offsetHeight;
+    if (top >= offset && top < offset + height) {
+      current = "#" + section.id;
+    }
+  });
 
-          <!-- Orbit cards -->
-          <div class="orbit-cards">
-            <div class="orbit-card">
-              <span class="orbit-label">Game‑like CMD</span>
-              <p>Play through puzzles that feel like unblocked games, but teach real CLI logic.</p>
-            </div>
-            <div class="orbit-card">
-              <span class="orbit-label">Safe Sandbox</span>
-              <p>Everything runs virtually, with no system changes or bypass tricks.</p>
-            </div>
-            <div class="orbit-card">
-              <span class="orbit-label">Learn by Doing</span>
-              <p>Type commands, read feedback, and unlock harder labs as you improve.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+  navLinks.forEach((link) => {
+    if (link.getAttribute("href") === current) link.classList.add("active");
+    else link.classList.remove("active");
+  });
+}
 
-      <!-- ABOUT -->
-      <section id="about" class="section about">
-        <div class="section-header">
-          <p class="section-kicker">About</p>
-          <h2>Googuardiaan is a CMD playground.</h2>
-          <p class="section-subtitle">
-            It looks like a retro command prompt mixed with a modern game launcher,
-            but everything is focused on learning how programs think.
-          </p>
-        </div>
-        <div class="about-grid">
-          <div class="about-card">
-            <h3>Retro terminal vibe</h3>
-            <p>
-              The UI is inspired by classic command prompts, neon arcade machines,
-              and modern portfolio sites.
-            </p>
-          </div>
-          <div class="about-card">
-            <h3>Built for learners</h3>
-            <p>
-              Perfect for students and hobbyists who want to understand variables,
-              branches, and I/O without setting up heavy tools.
-            </p>
-          </div>
-          <div class="about-card">
-            <h3>Ethical only</h3>
-            <p>
-              Labs are designed to teach analysis and debugging, not to evade
-              security or monitoring systems.
-            </p>
-          </div>
-        </div>
-      </section>
+window.addEventListener("scroll", setActiveLink);
 
-      <!-- FEATURES -->
-      <section id="features" class="section features">
-        <div class="section-header">
-          <p class="section-kicker">Features</p>
-          <h2>Terminal‑first, arcade‑style learning.</h2>
-        </div>
-        <div class="features-grid">
-          <article class="feature-card">
-            <h3>Interactive CLI</h3>
-            <p>
-              Type commands into a simulated terminal and watch how the parser reacts.
-            </p>
-            <ul>
-              <li>Custom prompts</li>
-              <li>Command history</li>
-              <li>Keyboard‑only support</li>
-            </ul>
-          </article>
+// Scroll reveal
+const revealEls = document.querySelectorAll(
+  ".section, .hero-stats, .about-card, .feature-card, .project-card, .lab-terminal, .docs-layout, .contact-layout"
+);
+revealEls.forEach((el) => el.classList.add("reveal"));
 
-          <article class="feature-card">
-            <h3>Step‑through logic</h3>
-            <p>
-              See each stage of execution, from arguments to branches and final output.
-            </p>
-            <ul>
-              <li>Visual pseudo‑code</li>
-              <li>Highlighted steps</li>
-              <li>Replay runs</li>
-            </ul>
-          </article>
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.2 }
+);
 
-          <article class="feature-card">
-            <h3>Arcade labs</h3>
-            <p>
-              Each lab feels like a mini‑game, but every level teaches a real concept.
-            </p>
-            <ul>
-              <li>Levels & difficulty</li>
-              <li>XP progress</li>
-              <li>Unlockable labs</li>
-            </ul>
-          </article>
+revealEls.forEach((el) => observer.observe(el));
 
-          <article class="feature-card">
-            <h3>Built‑in notes</h3>
-            <p>
-              Write down theories and answers while you experiment with different commands.
-            </p>
-            <ul>
-              <li>Session notes</li>
-              <li>Export to text</li>
-              <li>Keyboard shortcuts</li>
-            </ul>
-          </article>
-        </div>
-      </section>
+// 3D tilt on cards
+function attachTilt(selector) {
+  const cards = document.querySelectorAll(selector);
+  cards.forEach((card) => {
+    card.classList.add("tilt");
+    const strength = 14;
 
-      <!-- SKILLS / TECH -->
-      <section id="skills" class="section skills">
-        <div class="section-header">
-          <p class="section-kicker">Tech & learning</p>
-          <h2>What powers it — and what you learn.</h2>
-        </div>
-        <div class="skills-grid">
-          <div class="skills-column">
-            <h3>Languages</h3>
-            <div class="skill-pill">C#</div>
-            <div class="skill-pill">C++</div>
-            <div class="skill-pill">Python</div>
-            <div class="skill-pill">Batch / CMD</div>
-          </div>
-          <div class="skills-column">
-            <h3>Concepts</h3>
-            <div class="skill-pill">CLI design</div>
-            <div class="skill-pill">Args & flags</div>
-            <div class="skill-pill">Standard I/O</div>
-            <div class="skill-pill">Control flow</div>
-            <div class="skill-pill">Static analysis</div>
-          </div>
-          <div class="skills-column">
-            <h3>This site</h3>
-            <div class="skill-pill">HTML5</div>
-            <div class="skill-pill">CSS3</div>
-            <div class="skill-pill">JavaScript</div>
-            <div class="skill-pill">3D tilt UI</div>
-          </div>
-        </div>
-      </section>
+    card.addEventListener("pointermove", (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const rotateY = ((x / rect.width) - 0.5) * strength;
+      const rotateX = ((y / rect.height) - 0.5) * -strength;
+      card.style.transform =
+        `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+      card.classList.add("tilt-hover");
+    });
 
-      <!-- LABS / PROJECTS -->
-      <section id="projects" class="section projects">
-        <div class="section-header">
-          <p class="section-kicker">Labs</p>
-          <h2>CMD learning arcade (unblocked‑style hub).</h2>
-          <p class="section-subtitle">
-            These tiles act like an “unblocked games” homepage, but every game is a safe
-            lab that explains how programs work.
-          </p>
-        </div>
+    card.addEventListener("pointerleave", () => {
+      card.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
+      card.classList.remove("tilt-hover");
+    });
+  });
+}
 
-        <div class="projects-grid">
-          <article class="project-card run-lab" data-lab="echo">
-            <div class="project-header">
-              <span class="project-tag">Beginner</span>
-              <h3>🕹 Echo & Args Arcade</h3>
-            </div>
-            <p>
-              Learn how arguments are read and echoed back, then extend behavior with
-              flags like <code>--upper</code> and <code>--reverse</code>.
-            </p>
-            <button class="btn small">Play lab</button>
-          </article>
+attachTilt(".project-card");
+attachTilt(".feature-card");
+attachTilt(".about-card");
+attachTilt(".term-window");
+attachTilt(".lab-terminal");
+attachTilt(".orbit-card");
+attachTilt(".contact-form");
 
-          <article class="project-card run-lab" data-lab="branch">
-            <div class="project-header">
-              <span class="project-tag">Beginner</span>
-              <h3>🔀 Branch Quest</h3>
-            </div>
-            <p>
-              Choose inputs and see which branch the program takes, like navigating a
-              story path.
-            </p>
-            <button class="btn small">Play lab</button>
-          </article>
+// Lab demos
+const labOutput = document.getElementById("lab-output");
+const labCards = document.querySelectorAll(".run-lab");
 
-          <article class="project-card run-lab" data-lab="logs">
-            <div class="project-header">
-              <span class="project-tag">Intermediate</span>
-              <h3>📜 Log Decoder</h3>
-            </div>
-            <p>
-              Inspect fake logs, reconstruct which commands were used, and test your
-              guesses in the sandbox.
-            </p>
-            <button class="btn small">Play lab</button>
-          </article>
+const labScripts = {
+  echo: [
+    "C:\\User> run echo --text \"Hello, Googuardiaan\"",
+    "[parser] command: echo",
+    "[parser] flag: --text",
+    "[exec] output: Hello, Googuardiaan"
+  ],
+  branch: [
+    "C:\\User> run branch --mode safe",
+    "[input] mode = safe",
+    "[branch] taking safe path...",
+    "[exec] sandbox enabled, no real files touched"
+  ],
+  logs: [
+    "C:\\User> run logs --source sample.txt",
+    "[io] reading 32 lines...",
+    "[analysis] 3 unique commands detected",
+    "[task] guess the missing flags"
+  ],
+  disasm: [
+    "C:\\User> run disasm --file demo.bin",
+    "[loader] reading pseudo ops...",
+    "[view] jmp -> while loop",
+    "[tip] map low-level steps back to if/else"
+  ]
+};
 
-          <article class="project-card run-lab" data-lab="disasm">
-            <div class="project-header">
-              <span class="project-tag">Advanced</span>
-              <h3>🧠 Pseudo‑Disassembler</h3>
-            </div>
-            <p>
-              See simplified low‑level steps and map them back to high‑level logic,
-              focusing on understanding, not exploitation.
-            </p>
-            <button class="btn small">Play lab</button>
-          </article>
-        </div>
+labCards.forEach((card) => {
+  card.addEventListener("click", () => {
+    const lab = card.dataset.lab;
+    const lines = labScripts[lab] || [];
 
-        <!-- Labs demo terminal -->
-        <div class="lab-terminal">
-          <div class="term-header">
-            <div class="term-dots">
-              <span class="dot red"></span>
-              <span class="dot yellow"></span>
-              <span class="dot green"></span>
-            </div>
-            <span class="term-title">Lab Demo</span>
-          </div>
-          <div class="term-body" id="lab-output">
-            <div class="term-line">Select a lab tile above to preview a sample session.</div>
-          </div>
-        </div>
-      </section>
+    // Background flash to feel like launching a game
+    document.body.classList.add("lab-launch");
+    setTimeout(() => document.body.classList.remove("lab-launch"), 250);
 
-      <!-- DOCS -->
-      <section id="docs" class="section docs">
-        <div class="section-header">
-          <p class="section-kicker">Docs</p>
-          <h2>Commands & usage.</h2>
-        </div>
-        <div class="docs-layout">
-          <aside class="docs-sidebar">
-            <button class="docs-link active" data-doc="overview">Overview</button>
-            <button class="docs-link" data-doc="commands">Commands</button>
-            <button class="docs-link" data-doc="ethics">Ethical Use</button>
-          </aside>
-          <article class="docs-content">
-            <div class="doc-panel active" id="doc-overview">
-              <h3>Overview</h3>
-              <p>
-                Googuardiaan runs as a CMD‑style program. You type commands and
-                options, and it simulates how a simple tool would respond.
-              </p>
-              <pre><code>C:\User&gt; googuardiaan --lab echo
-C:\Lab\Echo&gt; help
-              </code></pre>
-            </div>
+    labOutput.innerHTML = "";
+    lines.forEach((line, i) => {
+      setTimeout(() => {
+        const div = document.createElement("div");
+        div.className = "term-line";
+        div.textContent = line;
+        labOutput.appendChild(div);
+        labOutput.scrollTop = labOutput.scrollHeight;
+      }, i * 320);
+    });
+  });
+});
 
-            <div class="doc-panel" id="doc-commands">
-              <h3>Commands</h3>
-              <ul>
-                <li><code>help</code> – Show all available commands.</li>
-                <li><code>run &lt;lab&gt;</code> – Start a learning lab.</li>
-                <li><code>explain</code> – Show step‑by‑step breakdown.</li>
-                <li><code>notes</code> – Open the in‑app notebook.</li>
-              </ul>
-            </div>
+// Docs tabs
+const docButtons = document.querySelectorAll(".docs-link");
+const docPanels = document.querySelectorAll(".doc-panel");
 
-            <div class="doc-panel" id="doc-ethics">
-              <h3>Ethical Use</h3>
-              <p>
-                Googuardiaan exists to teach how software works, not how to bypass
-                security, filters, or monitoring systems.
-              </p>
-              <p>
-                Every lab focuses on debugging, reasoning, and safe behavior. Use it
-                to get better at programming and analysis, not to break rules.
-              </p>
-            </div>
-          </article>
-        </div>
-      </section>
+docButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const id = btn.dataset.doc;
+    docButtons.forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    docPanels.forEach((panel) => {
+      panel.classList.toggle("active", panel.id === `doc-${id}`);
+    });
+  });
+});
 
-      <!-- CONTACT -->
-      <section id="contact" class="section contact">
-        <div class="section-header">
-          <p class="section-kicker">Contact</p>
-          <h2>Have feedback or ideas?</h2>
-        </div>
-        <div class="contact-layout">
-          <div class="contact-info">
-            <p>
-              Want to test labs, suggest a new CMD puzzle, or use Googuardiaan in a
-              class? Reach out and share your ideas.
-            </p>
-            <ul class="contact-list">
-              <li><span>Location:</span> Urbana, Ohio (USA)</li>
-              <li><span>Email:</span> you@example.com</li>
-              <li><span>GitHub:</span> github.com/your‑handle</li>
-            </ul>
-          </div>
+// Fake contact form handler
+const form = document.getElementById("contact-form");
+const statusEl = document.getElementById("form-status");
 
-          <form class="contact-form" id="contact-form">
-            <div class="form-row">
-              <input type="text" name="name" placeholder="Name" required />
-              <input type="email" name="email" placeholder="Email" required />
-            </div>
-            <input type="text" name="subject" placeholder="Subject" />
-            <textarea name="message" rows="4" placeholder="Your message..."></textarea>
-            <button type="submit" class="btn primary">Send Message</button>
-            <p class="form-status" id="form-status"></p>
-          </form>
-        </div>
-      </section>
-    </main>
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  statusEl.textContent = "Sending...";
+  setTimeout(() => {
+    statusEl.textContent =
+      "Thanks! This demo doesn’t actually send email, but your message was captured locally.";
+    form.reset();
+  }, 700);
+});
 
-    <!-- FOOTER -->
-    <footer class="footer">
-      <p>© <span id="year"></span> Googuardiaan • Built for learning, not bypassing.</p>
-    </footer>
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
-
+// Footer year
+document.getElementById("year").textContent = new Date().getFullYear();
