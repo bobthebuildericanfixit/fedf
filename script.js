@@ -60,7 +60,7 @@ window.addEventListener("scroll", setActiveLink);
 
 // Scroll reveal
 const revealEls = document.querySelectorAll(
-  ".section, .hero-stats, .about-card, .feature-card, .project-card, .lab-terminal, .docs-layout, .contact-layout"
+  ".section, .hero-stats, .about-card, .project-card, .lab-terminal, .helper-layout, .contact-layout"
 );
 revealEls.forEach((el) => el.classList.add("reveal"));
 
@@ -104,80 +104,198 @@ function attachTilt(selector) {
 }
 
 attachTilt(".project-card");
-attachTilt(".feature-card");
-attachTilt(".about-card");
 attachTilt(".term-window");
 attachTilt(".lab-terminal");
-attachTilt(".orbit-card");
+attachTilt(".about-card");
+attachTilt(".helper-card");
 attachTilt(".contact-form");
+attachTilt(".orbit-card");
 
-// Lab demos
-const labOutput = document.getElementById("lab-output");
-const labCards = document.querySelectorAll(".run-lab");
+// Game previews
+const gameOutput = document.getElementById("game-output");
+const gameCards = document.querySelectorAll(".run-game");
 
-const labScripts = {
-  echo: [
-    "C:\\User> run echo --text \"Hello, Googuardiaan\"",
-    "[parser] command: echo",
-    "[parser] flag: --text",
-    "[exec] output: Hello, Googuardiaan"
+const gameScripts = {
+  runner: [
+    "arcade> open neon_runner",
+    "[loading] drawing endless hallway...",
+    "[tip] use arrows/WASD to dodge obstacles.",
+    "[goal] survive until the timer hits zero."
   ],
-  branch: [
-    "C:\\User> run branch --mode safe",
-    "[input] mode = safe",
-    "[branch] taking safe path...",
-    "[exec] sandbox enabled, no real files touched"
+  stack: [
+    "arcade> open pixel_stack",
+    "[loading] loading colorful blocks...",
+    "[tip] tap when blocks line up for a perfect stack.",
+    "[goal] build as high as you can before it collapses."
   ],
-  logs: [
-    "C:\\User> run logs --source sample.txt",
-    "[io] reading 32 lines...",
-    "[analysis] 3 unique commands detected",
-    "[task] guess the missing flags"
+  chill: [
+    "arcade> open space_idle",
+    "[loading] spinning up tiny galaxy...",
+    "[tip] click planets to earn stars over time.",
+    "[goal] check in between homework questions."
   ],
-  disasm: [
-    "C:\\User> run disasm --file demo.bin",
-    "[loader] reading pseudo ops...",
-    "[view] jmp -> while loop",
-    "[tip] map low-level steps back to if/else"
+  memory: [
+    "arcade> open memory_match",
+    "[loading] shuffling cards...",
+    "[tip] remember where each icon is hiding.",
+    "[goal] clear the board in the fewest flips."
   ]
 };
 
-labCards.forEach((card) => {
+gameCards.forEach((card) => {
   card.addEventListener("click", () => {
-    const lab = card.dataset.lab;
-    const lines = labScripts[lab] || [];
+    const game = card.dataset.game;
+    const lines = gameScripts[game] || [];
 
-    // Background flash to feel like launching a game
     document.body.classList.add("lab-launch");
     setTimeout(() => document.body.classList.remove("lab-launch"), 250);
 
-    labOutput.innerHTML = "";
+    gameOutput.innerHTML = "";
     lines.forEach((line, i) => {
       setTimeout(() => {
         const div = document.createElement("div");
         div.className = "term-line";
         div.textContent = line;
-        labOutput.appendChild(div);
-        labOutput.scrollTop = labOutput.scrollHeight;
+        gameOutput.appendChild(div);
+        gameOutput.scrollTop = gameOutput.scrollHeight;
       }, i * 320);
     });
   });
 });
 
-// Docs tabs
-const docButtons = document.querySelectorAll(".docs-link");
-const docPanels = document.querySelectorAll(".doc-panel");
+// Game filters
+const filterButtons = document.querySelectorAll(".filter-btn");
+const gamesGrid = document.getElementById("games-grid");
+const allGames = gamesGrid.querySelectorAll(".project-card");
 
-docButtons.forEach((btn) => {
+filterButtons.forEach((btn) => {
   btn.addEventListener("click", () => {
-    const id = btn.dataset.doc;
-    docButtons.forEach((b) => b.classList.remove("active"));
+    const type = btn.dataset.filter;
+    filterButtons.forEach((b) => b.classList.remove("active"));
     btn.classList.add("active");
-    docPanels.forEach((panel) => {
-      panel.classList.toggle("active", panel.id === `doc-${id}`);
+
+    allGames.forEach((card) => {
+      const cardType = card.dataset.type;
+      if (type === "all" || cardType === type) {
+        card.style.display = "";
+      } else {
+        card.style.display = "none";
+      }
     });
   });
 });
+
+// Homework helper: tasks
+const taskInput = document.getElementById("task-input");
+const addTaskBtn = document.getElementById("add-task");
+const taskList = document.getElementById("task-list");
+
+function addTask(text) {
+  if (!text.trim()) return;
+  const li = document.createElement("li");
+  li.className = "task-item";
+
+  const span = document.createElement("span");
+  span.className = "task-text";
+  span.textContent = text;
+
+  const actions = document.createElement("div");
+  actions.className = "task-actions";
+
+  const doneBtn = document.createElement("button");
+  doneBtn.className = "task-btn";
+  doneBtn.textContent = "Done";
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.className = "task-btn";
+  deleteBtn.textContent = "✕";
+
+  doneBtn.addEventListener("click", () => {
+    span.classList.toggle("completed");
+  });
+
+  deleteBtn.addEventListener("click", () => {
+    li.remove();
+  });
+
+  actions.appendChild(doneBtn);
+  actions.appendChild(deleteBtn);
+
+  li.appendChild(span);
+  li.appendChild(actions);
+  taskList.appendChild(li);
+}
+
+addTaskBtn.addEventListener("click", () => {
+  addTask(taskInput.value);
+  taskInput.value = "";
+});
+
+taskInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    addTask(taskInput.value);
+    taskInput.value = "";
+  }
+});
+
+// Homework helper: timer
+const timerMinutes = document.getElementById("timer-minutes");
+const timerDisplay = document.getElementById("timer-display");
+const startTimerBtn = document.getElementById("start-timer");
+const resetTimerBtn = document.getElementById("reset-timer");
+
+let timerInterval = null;
+let remainingSeconds = 0;
+
+function updateTimerDisplay() {
+  const mins = String(Math.floor(remainingSeconds / 60)).padStart(2, "0");
+  const secs = String(remainingSeconds % 60).padStart(2, "0");
+  timerDisplay.textContent = `${mins}:${secs}`;
+}
+
+startTimerBtn.addEventListener("click", () => {
+  if (timerInterval) return;
+  remainingSeconds = parseInt(timerMinutes.value, 10) * 60;
+  updateTimerDisplay();
+  timerInterval = setInterval(() => {
+    remainingSeconds--;
+    updateTimerDisplay();
+    if (remainingSeconds <= 0) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      timerDisplay.textContent = "Done!";
+    }
+  }, 1000);
+});
+
+resetTimerBtn.addEventListener("click", () => {
+  clearInterval(timerInterval);
+  timerInterval = null;
+  remainingSeconds = 0;
+  timerDisplay.textContent = "00:00";
+});
+
+// Homework helper: random tips
+const tipsList = document.getElementById("tips-list");
+const tips = [
+  "Do one small homework task before opening another game.",
+  "If something is confusing, write down the exact question to ask a teacher later.",
+  "Set a 10‑minute timer, focus hard, then take a quick break.",
+  "Keep all your assignments in one list so nothing gets lost.",
+  "If you’re stuck, try explaining the problem out loud in your own words."
+];
+
+function showRandomTips() {
+  tipsList.innerHTML = "";
+  const shuffled = [...tips].sort(() => Math.random() - 0.5);
+  shuffled.slice(0, 3).forEach((tip) => {
+    const li = document.createElement("li");
+    li.textContent = tip;
+    tipsList.appendChild(li);
+  });
+}
+
+showRandomTips();
 
 // Fake contact form handler
 const form = document.getElementById("contact-form");
