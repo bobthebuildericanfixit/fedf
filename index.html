@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Neon Study Arcade • Unblocked‑Style Games</title>
+  <title>K.I.N.G • Kids Interactive Next‑Gen Games</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -10,29 +10,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <!-- Loading screen -->
-  <div class="loader" id="loader">
-    <div class="loader-orbit">
-      <span></span><span></span><span></span>
-    </div>
-    <p>Booting Neon Study Arcade...</p>
-  </div>
-
-  <!-- Custom neon cursor (real cursor hidden in CSS) -->
+  <!-- Custom cursor -->
   <div class="cursor-dot" id="cursor-dot"></div>
   <div class="cursor-ring" id="cursor-ring"></div>
 
-  <!-- Background glow/grid -->
+  <!-- Background -->
   <div class="bg-orbit"></div>
   <div class="bg-grid"></div>
 
   <div class="container">
-    <!-- NAVBAR -->
+    <!-- NAV -->
     <header class="nav">
       <div class="nav-left">
         <div class="logo">
-          <span class="logo-icon">&gt;</span>
-          <span class="logo-text">Neon Study Arcade<span class="logo-blink">_</span></span>
+          <span class="logo-icon">K</span>
+          <span class="logo-text">K.I.N.G<span class="logo-blink">_</span></span>
         </div>
       </div>
       <nav class="nav-links">
@@ -43,8 +35,8 @@
         <a href="#contact" class="nav-link">Contact</a>
       </nav>
       <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-        <span class="theme-icon theme-dark">🌙</span>
-        <span class="theme-icon theme-light">☀️</span>
+        <span class="theme-icon theme-dark">Dark</span>
+        <span class="theme-icon theme-light">Light</span>
       </button>
       <button class="nav-menu" id="nav-menu">
         <span></span><span></span><span></span>
@@ -64,84 +56,70 @@
       <!-- HERO -->
       <section id="hero" class="section hero">
         <div class="hero-content">
-          <div class="hero-chip">For Students • Free Time Fun</div>
+          <div class="hero-chip">K.I.N.G • Kids Interactive Next‑Gen Games</div>
           <h1 class="hero-title">
             Bored at school?<br />
-            Open the <span class="gradient-text">Neon Study Arcade</span>.
+            Jump into <span class="gradient-text">K.I.N.G</span>.
           </h1>
           <p class="hero-subtitle">
-            A clean, fast, unblocked‑style hub with quick games to kill boredom
-            and a built‑in homework helper so you can actually finish your work too.
+            A clean, fast hub that feels like a gaming site: quick browser games for
+            free time and a built‑in homework helper so you don’t fall behind.
           </p>
           <div class="hero-actions">
-            <a href="#games" class="btn primary">Browse Games</a>
-            <a href="#helper" class="btn ghost">Use Homework Helper</a>
+            <a href="#games" class="btn primary scroll-link">Browse Games</a>
+            <a href="#helper" class="btn ghost scroll-link">Open Homework Helper</a>
           </div>
 
           <div class="hero-stats">
             <div class="stat-card">
-              <span class="stat-label">Mini‑games</span>
+              <span class="stat-label">Games</span>
               <span class="stat-value">20+</span>
-              <span class="stat-foot">Arcade, puzzles & chill games</span>
+              <span class="stat-foot">Arcade, puzzles, chill</span>
             </div>
             <div class="stat-card">
               <span class="stat-label">Homework tools</span>
-              <span class="stat-value">Built‑in</span>
-              <span class="stat-foot">Tasks, timer, quick tips</span>
+              <span class="stat-value">3</span>
+              <span class="stat-foot">Tasks, timer, hints</span>
             </div>
             <div class="stat-card">
-              <span class="stat-label">For</span>
+              <span class="stat-label">Target</span>
               <span class="stat-value">Students</span>
-              <span class="stat-foot">Free time & study breaks</span>
+              <span class="stat-foot">Free time & breaks</span>
             </div>
           </div>
         </div>
 
-        <!-- Animated terminal‑style panel -->
+        <!-- HERO SIDE: FEATURE CARDS -->
         <div class="hero-panel">
-          <div class="term-window">
-            <div class="term-header">
-              <div class="term-dots">
-                <span class="dot red"></span>
-                <span class="dot yellow"></span>
-                <span class="dot green"></span>
-              </div>
-              <span class="term-title">Neon Study Arcade</span>
+          <div class="hero-grid">
+            <div class="hero-card">
+              <h3>Play instantly</h3>
+              <p>Open a browser game in one click, no install or login required.</p>
             </div>
-            <div class="term-body" id="terminal-body">
-              <div class="term-line">welcome_player: launching arcade...</div>
-              <div class="term-line">tip: play a game, then finish one homework task.</div>
-              <div class="term-line">type "games" to see the library or "study" to open helper.</div>
-              <div class="term-line blinking">arcade&gt; _</div>
+            <div class="hero-card">
+              <h3>Stay organized</h3>
+              <p>Use the task list and timer to finish one thing before the next game.</p>
             </div>
-          </div>
-
-          <!-- Orbit cards -->
-          <div class="orbit-cards">
-            <div class="orbit-card">
-              <span class="orbit-label">Quick breaks</span>
-              <p>Short games you can play between classes or during free time.</p>
+            <div class="hero-card">
+              <h3>Get smart hints</h3>
+              <p>The homework helper gives steps and tips instead of full answers.</p>
             </div>
-            <div class="orbit-card">
-              <span class="orbit-label">Study friendly</span>
-              <p>Homework helper panel to keep you on track while you chill.</p>
-            </div>
-            <div class="orbit-card">
-              <span class="orbit-label">No weird stuff</span>
-              <p>Just simple games and tools—no hacks, exploits, or shady links.</p>
+            <div class="hero-card">
+              <h3>School‑friendly</h3>
+              <p>No hacks or exploits—just games and simple study tools.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- GAMES HUB -->
-      <section id="games" class="section projects">
+      <!-- GAMES -->
+      <section id="games" class="section games">
         <div class="section-header">
           <p class="section-kicker">Games</p>
-          <h2>Neon game wall for bored students.</h2>
+          <h2>K.I.N.G game library.</h2>
           <p class="section-subtitle">
-            Pick a tile to see a fake terminal preview. You can later swap these
-            with iframes or links to real games you host elsewhere.
+            A grid like a real gaming site. Each card can open an external game link
+            or an embedded game inside the page.
           </p>
         </div>
 
@@ -149,60 +127,80 @@
           <button class="filter-btn active" data-filter="all">All</button>
           <button class="filter-btn" data-filter="chill">Chill</button>
           <button class="filter-btn" data-filter="arcade">Arcade</button>
-          <button class="filter-btn" data-filter="puzzle">Puzzles</button>
+          <button class="filter-btn" data-filter="puzzle">Puzzle</button>
         </div>
 
-        <div class="projects-grid" id="games-grid">
-          <article class="project-card run-game" data-game="runner" data-type="arcade">
-            <div class="project-header">
-              <span class="project-tag">Arcade</span>
-              <h3>🛸 Neon Runner</h3>
-            </div>
-            <p>Dodge obstacles, collect orbs, and try not to crash before the bell rings.</p>
-            <button class="btn small">Preview</button>
-          </article>
+        <div class="games-layout">
+          <div class="games-grid" id="games-grid">
+            <!-- Example game card; update data-url to your real game links -->
+            <article class="game-card run-game"
+              data-game="runner" data-type="arcade"
+              data-url="https://example.com/games/neon-runner">
+              <div class="game-thumb game-thumb-1"></div>
+              <div class="game-info">
+                <h3>Neon Runner</h3>
+                <p>Fast endless runner—dodge obstacles and beat the clock.</p>
+                <div class="game-meta">
+                  <span class="tag">Arcade</span>
+                  <span class="tag">Fast</span>
+                </div>
+              </div>
+            </article>
 
-          <article class="project-card run-game" data-game="stack" data-type="puzzle">
-            <div class="project-header">
-              <span class="project-tag">Puzzle</span>
-              <h3>🧱 Pixel Stack</h3>
-            </div>
-            <p>Stack blocks perfectly to build the tallest tower in class.</p>
-            <button class="btn small">Preview</button>
-          </article>
+            <article class="game-card run-game"
+              data-game="stack" data-type="puzzle"
+              data-url="https://example.com/games/pixel-stack">
+              <div class="game-thumb game-thumb-2"></div>
+              <div class="game-info">
+                <h3>Pixel Stack</h3>
+                <p>Time your clicks to stack blocks as high as possible.</p>
+                <div class="game-meta">
+                  <span class="tag">Puzzle</span>
+                  <span class="tag">Timing</span>
+                </div>
+              </div>
+            </article>
 
-          <article class="project-card run-game" data-game="chill" data-type="chill">
-            <div class="project-header">
-              <span class="project-tag">Chill</span>
-              <h3>🌌 Space Idle</h3>
-            </div>
-            <p>Slow, relaxing clicker you can check between homework questions.</p>
-            <button class="btn small">Preview</button>
-          </article>
+            <article class="game-card run-game"
+              data-game="chill" data-type="chill"
+              data-url="https://example.com/games/space-idle">
+              <div class="game-thumb game-thumb-3"></div>
+              <div class="game-info">
+                <h3>Space Idle</h3>
+                <p>Relaxing idle game you can check between homework tasks.</p>
+                <div class="game-meta">
+                  <span class="tag">Chill</span>
+                  <span class="tag">Idle</span>
+                </div>
+              </div>
+            </article>
 
-          <article class="project-card run-game" data-game="memory" data-type="puzzle">
-            <div class="project-header">
-              <span class="project-tag">Puzzle</span>
-              <h3>🧠 Memory Match</h3>
-            </div>
-            <p>Flip cards, remember patterns, and beat your last score.</p>
-            <button class="btn small">Preview</button>
-          </article>
-        </div>
-
-        <!-- Games demo terminal -->
-        <div class="lab-terminal">
-          <div class="term-header">
-            <div class="term-dots">
-              <span class="dot red"></span>
-              <span class="dot yellow"></span>
-              <span class="dot green"></span>
-            </div>
-            <span class="term-title">Game Preview</span>
+            <article class="game-card run-game"
+              data-game="memory" data-type="puzzle"
+              data-url="https://example.com/games/memory-match">
+              <div class="game-thumb game-thumb-4"></div>
+              <div class="game-info">
+                <h3>Memory Match</h3>
+                <p>Flip cards, remember icons, and beat your best score.</p>
+                <div class="game-meta">
+                  <span class="tag">Puzzle</span>
+                  <span class="tag">Memory</span>
+                </div>
+              </div>
+            </article>
           </div>
-          <div class="term-body" id="game-output">
-            <div class="term-line">Click a game tile above to see a quick preview here.</div>
-            <div class="term-line">Later you can embed the real game instead of this text.</div>
+
+          <div class="game-viewer">
+            <div class="viewer-header">
+              <h3 id="viewer-title">Select a game to preview</h3>
+              <button id="open-new-tab" class="btn small viewer-btn" disabled>Open in new tab</button>
+            </div>
+            <div class="viewer-embed" id="game-frame">
+              <p class="viewer-placeholder">
+                Click any game card on the left to load it here. Replace the URLs in
+                the HTML with your own hosted games.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -210,32 +208,31 @@
       <!-- HOMEWORK HELPER -->
       <section id="helper" class="section helper">
         <div class="section-header">
-          <p class="section-kicker">Homework Helper</p>
-          <h2>Do a little work, then go back to playing.</h2>
+          <p class="section-kicker">Homework</p>
+          <h2>K.I.N.G homework helper.</h2>
           <p class="section-subtitle">
-            Use this panel to list homework, set a quick timer, and get simple tips
-            so you don’t completely forget your assignments.
+            Play, but don’t fail. Use the task list, timer, and hint helper to keep
+            your assignments under control.
           </p>
         </div>
 
         <div class="helper-layout">
           <!-- Task list -->
           <div class="helper-card">
-            <h3>📓 Task list</h3>
+            <h3>Task list</h3>
+            <p class="helper-text">List what you need to finish before your next game session.</p>
             <div class="task-input-row">
               <input type="text" id="task-input" placeholder="Example: Finish math worksheet" />
               <button id="add-task" class="btn small">Add</button>
             </div>
-            <ul id="task-list" class="task-list">
-              <!-- tasks added here -->
-            </ul>
+            <ul id="task-list" class="task-list"></ul>
           </div>
 
-          <!-- Timer & quick tips -->
+          <!-- Timer & tips -->
           <div class="helper-card">
-            <h3>⏱ Focus timer</h3>
+            <h3>Focus timer</h3>
             <p class="helper-text">
-              Set a short focus burst, finish one thing, then return to your game.
+              Pick a short time, focus only on homework, then reward yourself with a game.
             </p>
             <div class="timer-controls">
               <select id="timer-minutes">
@@ -249,10 +246,19 @@
             </div>
             <div class="timer-display" id="timer-display">00:00</div>
 
-            <h3 class="tips-title">💡 Quick study tips</h3>
-            <ul class="tips-list" id="tips-list">
-              <!-- random tips appear here -->
-            </ul>
+            <h3 class="tips-title">Study tips</h3>
+            <ul class="tips-list" id="tips-list"></ul>
+          </div>
+
+          <!-- AI‑style helper -->
+          <div class="helper-card">
+            <h3>Hint helper</h3>
+            <p class="helper-text">
+              Paste a question below. K.I.N.G gives hints and steps instead of full answers.
+            </p>
+            <textarea id="hw-input" rows="4" placeholder="Example: Explain how photosynthesis works."></textarea>
+            <button id="hw-help" class="btn small hw-btn">Get hints</button>
+            <div id="hw-output" class="hw-output"></div>
           </div>
         </div>
       </section>
@@ -261,33 +267,24 @@
       <section id="about" class="section about">
         <div class="section-header">
           <p class="section-kicker">About</p>
-          <h2>Made for bored students, not rule‑breakers.</h2>
+          <h2>What K.I.N.G is—and isn’t.</h2>
           <p class="section-subtitle">
-            This is a personal project: a clean homepage that looks like an unblocked
-            games site but stays focused on chill games and homework help.
+            A gaming‑style homepage for bored students that mixes quick games with
+            basic tools so you can still keep up with school.
           </p>
         </div>
         <div class="about-grid">
           <div class="about-card">
-            <h3>Simple idea</h3>
-            <p>
-              Give students something fun to click on during downtime, without tons
-              of ads or sketchy popups.
-            </p>
+            <h3>Gaming‑site look</h3>
+            <p>Dark theme, neon accents, animated cards, and hover effects like real game portals.</p>
           </div>
           <div class="about-card">
-            <h3>Study + play</h3>
-            <p>
-              The homework helper panel makes it easier to remember assignments and
-              keep track of what you actually need to finish.
-            </p>
+            <h3>Homework friendly</h3>
+            <p>Task list and hint helper push you to think instead of copy answers.</p>
           </div>
           <div class="about-card">
-            <h3>No bypass tools</h3>
-            <p>
-              This site is not made to hack, bypass filters, or mess with school
-              systems—just games and simple study tools.
-            </p>
+            <h3>No exploits</h3>
+            <p>Nothing here is meant to bypass filters or break rules—just games and study tools.</p>
           </div>
         </div>
       </section>
@@ -296,13 +293,13 @@
       <section id="contact" class="section contact">
         <div class="section-header">
           <p class="section-kicker">Contact</p>
-          <h2>Have a game suggestion?</h2>
+          <h2>Suggest a game or feature.</h2>
         </div>
         <div class="contact-layout">
           <div class="contact-info">
             <p>
-              Want to suggest a game, report a broken link, or request a new homework
-              helper feature? Send a quick message.
+              Have a favorite browser game you want to see here, or an idea for a new
+              homework tool? Send a quick message.
             </p>
             <ul class="contact-list">
               <li><span>Location:</span> Urbana, Ohio (USA)</li>
@@ -327,7 +324,7 @@
 
     <!-- FOOTER -->
     <footer class="footer">
-      <p>© <span id="year"></span> Neon Study Arcade • For chill breaks and homework help.</p>
+      <p>© <span id="year"></span> K.I.N.G • Kids Interactive Next‑Gen Games.</p>
     </footer>
   </div>
 
