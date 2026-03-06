@@ -10,21 +10,25 @@ window.addEventListener("pointermove", (e) => {
 
 // Theme toggle
 const toggle = document.getElementById("theme-toggle");
-const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
-if (prefersLight) document.body.classList.add("light");
+if (toggle) {
+  const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+  if (prefersLight) document.body.classList.add("light");
 
-toggle.addEventListener("click", () => {
-  document.body.classList.toggle("light");
-});
+  toggle.addEventListener("click", () => {
+    document.body.classList.toggle("light");
+  });
+}
 
 // Mobile nav
 const navMenu = document.getElementById("nav-menu");
 const navMobile = document.getElementById("nav-mobile");
 
-navMenu.addEventListener("click", () => {
-  const show = navMobile.style.display === "flex";
-  navMobile.style.display = show ? "none" : "flex";
-});
+if (navMenu && navMobile) {
+  navMenu.addEventListener("click", () => {
+    const show = navMobile.style.display === "flex";
+    navMobile.style.display = show ? "none" : "flex";
+  });
+}
 
 // Smooth scrolling for nav and hero buttons
 function smoothScrollTo(targetId) {
@@ -40,11 +44,11 @@ document.querySelectorAll(".nav-link, .scroll-link").forEach((link) => {
   link.addEventListener("click", (e) => {
     e.preventDefault();
     smoothScrollTo(href);
-    navMobile.style.display = "none";
+    if (navMobile) navMobile.style.display = "none";
   });
 });
 
-// Active nav links on scroll
+// Active nav links on scroll (single‑page version)
 const sections = document.querySelectorAll("section");
 const navLinks = document.querySelectorAll(".nav-link");
 
@@ -60,7 +64,9 @@ function setActiveLink() {
   });
 
   navLinks.forEach((link) => {
-    if (link.getAttribute("href") === current) link.classList.add("active");
+    const href = link.getAttribute("href");
+    if (!href || !href.startsWith("#")) return;
+    if (href === current) link.classList.add("active");
     else link.classList.remove("active");
   });
 }
@@ -121,7 +127,6 @@ attachTilt(".about-card");
 attachTilt(".contact-form");
 
 // Game previews & embeds
-const gameOutput = document.getElementById("game-output"); // not used now, but kept if you want text logs
 const gameFrame = document.getElementById("game-frame");
 const viewerTitle = document.getElementById("viewer-title");
 const openNewTabBtn = document.getElementById("open-new-tab");
@@ -129,132 +134,110 @@ const gameCards = document.querySelectorAll(".run-game");
 
 let currentGameUrl = null;
 
-// Small description scripts for fun (not required)
-const gameScripts = {
-  runner: [
-    "loading Neon Runner...",
-    "tip: watch ahead, not at your feet.",
-    "goal: reach the end before the bell rings."
-  ],
-  stack: [
-    "loading Pixel Stack...",
-    "tip: wait until blocks line up.",
-    "goal: stack as high as you can."
-  ],
-  chill: [
-    "loading Space Idle...",
-    "tip: check upgrades between questions.",
-    "goal: grow your galaxy slowly."
-  ],
-  memory: [
-    "loading Memory Match...",
-    "tip: remember positions in pairs.",
-    "goal: clear the board in fewer moves."
-  ]
-};
+if (gameFrame && viewerTitle && openNewTabBtn && gameCards.length) {
+  gameCards.forEach((card) => {
+    card.addEventListener("click", () => {
+      const url = card.dataset.url;
+      currentGameUrl = url || null;
 
-gameCards.forEach((card) => {
-  card.addEventListener("click", () => {
-    const game = card.dataset.game;
-    const url = card.dataset.url;
-    currentGameUrl = url || null;
+      document.body.classList.add("lab-launch");
+      setTimeout(() => document.body.classList.remove("lab-launch"), 250);
 
-    document.body.classList.add("lab-launch");
-    setTimeout(() => document.body.classList.remove("lab-launch"), 250);
+      const titleEl = card.querySelector("h3");
+      viewerTitle.textContent = titleEl ? titleEl.textContent : "Game preview";
 
-    // Update viewer title
-    const titleEl = card.querySelector("h3");
-    viewerTitle.textContent = titleEl ? titleEl.textContent : "Game preview";
-
-    // Embed game if URL exists
-    if (url) {
-      gameFrame.innerHTML = "";
-      const iframe = document.createElement("iframe");
-      iframe.src = url;
-      gameFrame.appendChild(iframe);
-      openNewTabBtn.disabled = false;
-    } else {
-      gameFrame.innerHTML =
-        "<p class='viewer-placeholder'>No URL set for this game yet. Edit the HTML to add one.</p>";
-      openNewTabBtn.disabled = true;
-    }
+      if (url) {
+        gameFrame.innerHTML = "";
+        const iframe = document.createElement("iframe");
+        iframe.src = url;
+        gameFrame.appendChild(iframe);
+        openNewTabBtn.disabled = false;
+      } else {
+        gameFrame.innerHTML =
+          "<p class='viewer-placeholder'>No URL set for this game yet. Edit the HTML to add one.</p>";
+        openNewTabBtn.disabled = true;
+      }
+    });
   });
-});
 
-openNewTabBtn.addEventListener("click", () => {
-  if (!currentGameUrl) return;
-  window.open(currentGameUrl, "_blank");
-});
+  openNewTabBtn.addEventListener("click", () => {
+    if (!currentGameUrl) return;
+    window.open(currentGameUrl, "_blank");
+  });
+}
 
 // Game filters
 const filterButtons = document.querySelectorAll(".filter-btn");
 const gamesGrid = document.getElementById("games-grid");
-const allGames = gamesGrid.querySelectorAll(".game-card");
+if (gamesGrid && filterButtons.length) {
+  const allGames = gamesGrid.querySelectorAll(".game-card");
+  filterButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const type = btn.dataset.filter;
+      filterButtons.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
 
-filterButtons.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const type = btn.dataset.filter;
-    filterButtons.forEach((b) => b.classList.remove("active"));
-    btn.classList.add("active");
-
-    allGames.forEach((card) => {
-      const cardType = card.dataset.type;
-      card.style.display = type === "all" || cardType === type ? "" : "none";
+      allGames.forEach((card) => {
+        const cardType = card.dataset.type;
+        card.style.display = type === "all" || cardType === type ? "" : "none";
+      });
     });
   });
-});
+}
 
 // Homework helper: tasks
 const taskInput = document.getElementById("task-input");
 const addTaskBtn = document.getElementById("add-task");
 const taskList = document.getElementById("task-list");
 
-function addTask(text) {
-  if (!text.trim()) return;
-  const li = document.createElement("li");
-  li.className = "task-item";
+if (taskInput && addTaskBtn && taskList) {
+  function addTask(text) {
+    if (!text.trim()) return;
+    const li = document.createElement("li");
+    li.className = "task-item";
 
-  const span = document.createElement("span");
-  span.className = "task-text";
-  span.textContent = text;
+    const span = document.createElement("span");
+    span.className = "task-text";
+    span.textContent = text;
 
-  const actions = document.createElement("div");
-  actions.className = "task-actions";
+    const actions = document.createElement("div");
+    actions.className = "task-actions";
 
-  const doneBtn = document.createElement("button");
-  doneBtn.className = "task-btn";
-  doneBtn.textContent = "Done";
+    const doneBtn = document.createElement("button");
+    doneBtn.className = "task-btn";
+    doneBtn.textContent = "Done";
 
-  const deleteBtn = document.createElement("button");
-  deleteBtn.className = "task-btn";
-  deleteBtn.textContent = "X";
+    const deleteBtn = document.createElement("button");
+    deleteBtn.className = "task-btn";
+    deleteBtn.textContent = "X";
 
-  doneBtn.addEventListener("click", () => {
-    span.classList.toggle("completed");
-  });
+    doneBtn.addEventListener("click", () => {
+      span.classList.toggle("completed");
+    });
 
-  deleteBtn.addEventListener("click", () => {
-    li.remove();
-  });
+    deleteBtn.addEventListener("click", () => {
+      li.remove();
+    });
 
-  actions.appendChild(doneBtn);
-  actions.appendChild(deleteBtn);
-  li.appendChild(span);
-  li.appendChild(actions);
-  taskList.appendChild(li);
-}
+    actions.appendChild(doneBtn);
+    actions.appendChild(deleteBtn);
+    li.appendChild(span);
+    li.appendChild(actions);
+    taskList.appendChild(li);
+  }
 
-addTaskBtn.addEventListener("click", () => {
-  addTask(taskInput.value);
-  taskInput.value = "";
-});
-
-taskInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
+  addTaskBtn.addEventListener("click", () => {
     addTask(taskInput.value);
     taskInput.value = "";
-  }
-});
+  });
+
+  taskInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      addTask(taskInput.value);
+      taskInput.value = "";
+    }
+  });
+}
 
 // Homework helper: timer
 const timerMinutes = document.getElementById("timer-minutes");
@@ -265,151 +248,169 @@ const resetTimerBtn = document.getElementById("reset-timer");
 let timerInterval = null;
 let remainingSeconds = 0;
 
-function updateTimerDisplay() {
-  const mins = String(Math.floor(remainingSeconds / 60)).padStart(2, "0");
-  const secs = String(remainingSeconds % 60).padStart(2, "0");
-  timerDisplay.textContent = `${mins}:${secs}`;
-}
+if (timerMinutes && timerDisplay && startTimerBtn && resetTimerBtn) {
+  function updateTimerDisplay() {
+    const mins = String(Math.floor(remainingSeconds / 60)).padStart(2, "0");
+    const secs = String(remainingSeconds % 60).padStart(2, "0");
+    timerDisplay.textContent = `${mins}:${secs}`;
+  }
 
-startTimerBtn.addEventListener("click", () => {
-  if (timerInterval) return;
-  remainingSeconds = parseInt(timerMinutes.value, 10) * 60;
-  updateTimerDisplay();
-  timerInterval = setInterval(() => {
-    remainingSeconds--;
+  startTimerBtn.addEventListener("click", () => {
+    if (timerInterval) return;
+    remainingSeconds = parseInt(timerMinutes.value, 10) * 60;
     updateTimerDisplay();
-    if (remainingSeconds <= 0) {
-      clearInterval(timerInterval);
-      timerInterval = null;
-      timerDisplay.textContent = "Done!";
-    }
-  }, 1000);
-});
+    timerInterval = setInterval(() => {
+      remainingSeconds--;
+      updateTimerDisplay();
+      if (remainingSeconds <= 0) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        timerDisplay.textContent = "Done!";
+      }
+    }, 1000);
+  });
 
-resetTimerBtn.addEventListener("click", () => {
-  clearInterval(timerInterval);
-  timerInterval = null;
-  remainingSeconds = 0;
-  timerDisplay.textContent = "00:00";
-});
+  resetTimerBtn.addEventListener("click", () => {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    remainingSeconds = 0;
+    timerDisplay.textContent = "00:00";
+  });
+}
 
 // Homework helper: tips
 const tipsList = document.getElementById("tips-list");
-const tips = [
-  "Do one small homework task before opening another game.",
-  "If something is confusing, write down the exact question to ask a teacher later.",
-  "Set a 10‑minute timer, focus hard, then take a short break.",
-  "Keep all assignments in one list so nothing gets lost.",
-  "If you are stuck, explain the problem out loud in your own words first."
-];
+if (tipsList) {
+  const tips = [
+    "Do one small homework task before opening another game.",
+    "If something is confusing, write down the exact question to ask a teacher later.",
+    "Set a 10‑minute timer, focus hard, then take a short break.",
+    "Keep all assignments in one list so nothing gets lost.",
+    "If you are stuck, explain the problem out loud in your own words first."
+  ];
 
-function showRandomTips() {
-  tipsList.innerHTML = "";
-  const shuffled = [...tips].sort(() => Math.random() - 0.5);
-  shuffled.slice(0, 3).forEach((tip) => {
-    const li = document.createElement("li");
-    li.textContent = tip;
-    tipsList.appendChild(li);
-  });
+  function showRandomTips() {
+    tipsList.innerHTML = "";
+    const shuffled = [...tips].sort(() => Math.random() - 0.5);
+    shuffled.slice(0, 3).forEach((tip) => {
+      const li = document.createElement("li");
+      li.textContent = tip;
+      tipsList.appendChild(li);
+    });
+  }
+  showRandomTips();
 }
-showRandomTips();
 
-// Homework helper: hint generator (no full answers)
+// Hint helper (pseudo‑AI)
 const hwInput = document.getElementById("hw-input");
 const hwHelpBtn = document.getElementById("hw-help");
 const hwOutput = document.getElementById("hw-output");
 
-function buildHints(question) {
-  const q = question.trim();
-  if (!q) return "Type a question or assignment first.";
+if (hwInput && hwHelpBtn && hwOutput) {
+  function buildHints(question) {
+    const q = question.trim();
+    if (!q) return "Type or paste a question first, then click \"Get hints\".";
 
-  const lower = q.toLowerCase();
-  let subject = "general";
+    let response = "You asked:\n\"" + q + "\"\n\n";
 
-  if (lower.includes("photosynthesis") || lower.includes("cell") || lower.includes("energy")) {
-    subject = "science";
-  } else if (lower.includes("fraction") || lower.includes("equation") || lower.includes("solve") || lower.includes("x =")) {
-    subject = "math";
-  } else if (lower.includes("essay") || lower.includes("paragraph") || lower.includes("write")) {
-    subject = "writing";
-  } else if (lower.includes("history") || lower.includes("revolution") || lower.includes("war")) {
-    subject = "history";
-  }
+    const lower = q.toLowerCase();
 
-  const baseIntro =
-    "Here are hints instead of the full answer. Use them to think it through yourself.\n";
+    const words = lower
+      .replace(/[^a-z0-9\s]/g, " ")
+      .split(/\s+/)
+      .filter((w) => w.length > 3);
+    const unique = [...new Set(words)].slice(0, 6);
 
-  if (subject === "science") {
-    return (
+    if (unique.length) {
+      response += "Key ideas I see: " + unique.join(", ") + ".\n\n";
+    }
+
+    let subject = "general";
+    if (/(photosynthesis|cell|respiration|atom|energy|ecosystem)/.test(lower)) subject = "science";
+    else if (/(fraction|equation|solve|graph|function|slope|algebra|integer)/.test(lower)) subject = "math";
+    else if (/(essay|paragraph|thesis|analyze|compare|contrast|theme)/.test(lower)) subject = "writing";
+    else if (/(history|revolution|war|empire|civil|treaty|independence)/.test(lower)) subject = "history";
+
+    const baseIntro =
+      "Here are structured hints, not a finished answer. Use them as a checklist while you work:\n";
+
+    if (subject === "science") {
+      response +=
+        baseIntro +
+        "\n1. Vocabulary pass: underline any science terms (process names, parts, units). Look each up in your notes and write a one‑line meaning." +
+        "\n2. Inputs and outputs: list what goes in and what comes out of the process or system in the question." +
+        "\n3. Sequence: write the steps in order using bullets (first, next, then, finally)." +
+        "\n4. Why it matters: add one sentence on why this process matters in the body or environment." +
+        "\n5. Answer build: combine your bullets into 3–5 sentences in your own words. If it sounds like the book, rewrite it.";
+      return response;
+    }
+
+    if (subject === "math") {
+      response +=
+        baseIntro +
+        "\n1. Rewrite the problem clearly, leaving space between lines. Circle what you are solving for." +
+        "\n2. Decide the type: are you simplifying, solving for a variable, graphing, or comparing two things?" +
+        "\n3. List what is given (numbers, equations, diagrams) and what is missing. This keeps you from guessing." +
+        "\n4. Do one move that makes the expression simpler (combine like terms, isolate a fraction, move terms)." +
+        "\n5. After you get a candidate answer, plug it back into the original problem to check if it works. If not, find the step that broke.";
+      return response;
+    }
+
+    if (subject === "writing") {
+      response +=
+        baseIntro +
+        "\n1. Rephrase the prompt in one sentence. Make sure the main verb (explain, argue, compare) is in your sentence." +
+        "\n2. Brain dump 5 quick bullet ideas that could answer the prompt. Then keep the best 3." +
+        "\n3. For each of the 3, add one piece of evidence (quote, fact, or example) from your text or notes." +
+        "\n4. Turn each idea into a paragraph: topic sentence, evidence, and one sentence linking it back to the prompt." +
+        "\n5. Do a focus check: cross out any sentence that is not actually helping answer the question.";
+      return response;
+    }
+
+    if (subject === "history") {
+      response +=
+        baseIntro +
+        "\n1. Time and place: write the decade/century and region the question is about." +
+        "\n2. People and groups: list who is involved and what each side wanted." +
+        "\n3. Build a mini‑timeline of 3–5 key events in order." +
+        "\n4. For each event, jot one cause and one effect." +
+        "\n5. Use your timeline to write a paragraph explaining what happened, why it happened, and what changed afterward.";
+      return response;
+    }
+
+    response +=
       baseIntro +
-      "\n1. Identify what system or process is in the question (for example, a cycle or energy change)." +
-      "\n2. List the inputs and outputs in your own words." +
-      "\n3. Sketch a simple diagram with arrows showing what happens first, next, and last." +
-      "\n4. Use your notes or textbook to check key terms, but do not copy sentences." +
-      "\n5. Turn your diagram into 3–4 sentences that explain the process."
-    );
+      "\n1. Rewrite the question in a simpler sentence using your own words." +
+      "\n2. Highlight 3–5 important words and write what each means in this context." +
+      "\n3. Decide what the question wants you to do: explain, compare, list, argue, calculate, etc." +
+      "\n4. Outline your answer with 3–4 bullets, each bullet handling one part of the question." +
+      "\n5. Turn your outline into full sentences, then read once and check if you covered every part of the prompt.";
+    return response;
   }
 
-  if (subject === "math") {
-    return (
-      baseIntro +
-      "\n1. Rewrite the problem clearly, with each step on its own line." +
-      "\n2. Underline what the question is actually asking for (variable, length, total, etc.)." +
-      "\n3. Decide which operations you need and in what order." +
-      "\n4. Try one step and check if it makes the expression simpler; if not, try a different step." +
-      "\n5. Plug your final answer back into the original problem to see if it works."
-    );
-  }
-
-  if (subject === "writing") {
-    return (
-      baseIntro +
-      "\n1. Rephrase the prompt in a simple sentence in your own words." +
-      "\n2. List 3 short ideas that could be body paragraphs or main points." +
-      "\n3. For each idea, write one example or detail from your notes." +
-      "\n4. Turn your list into a paragraph: topic sentence, details, closing sentence." +
-      "\n5. Read it once and fix any parts that sound confusing or off‑topic."
-    );
-  }
-
-  if (subject === "history") {
-    return (
-      baseIntro +
-      "\n1. Write down the time period and location the question focuses on." +
-      "\n2. List the main people or groups involved." +
-      "\n3. Put key events in order using numbers (1, 2, 3…)." +
-      "\n4. For each event, note why it happened or what caused it." +
-      "\n5. Answer in 3 parts: what happened, why it happened, and what changed because of it."
-    );
-  }
-
-  return (
-    baseIntro +
-    "\n1. Rephrase the question in one simple sentence." +
-    "\n2. Highlight 3–5 important words from the question." +
-    "\n3. For each word, write a short definition using your notes." +
-    "\n4. Use those definitions to build a 3–4 sentence answer in your own voice." +
-    "\n5. Check that your answer responds to every part of the original question."
-  );
+  hwHelpBtn.addEventListener("click", () => {
+    hwOutput.textContent = buildHints(hwInput.value);
+  });
 }
-
-hwHelpBtn.addEventListener("click", () => {
-  hwOutput.textContent = buildHints(hwInput.value);
-});
 
 // Fake contact form handler
 const form = document.getElementById("contact-form");
 const statusEl = document.getElementById("form-status");
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  statusEl.textContent = "Sending...";
-  setTimeout(() => {
-    statusEl.textContent =
-      "Thanks! This demo does not actually send email, but your message was captured locally.";
-    form.reset();
-  }, 700);
-});
+if (form && statusEl) {
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    statusEl.textContent = "Sending...";
+    setTimeout(() => {
+      statusEl.textContent =
+        "Thanks. This demo does not actually send email, but your message was captured locally.";
+      form.reset();
+    }, 700);
+  });
+}
 
 // Footer year
-document.getElementById("year").textContent = new Date().getFullYear();
+const yearEl = document.getElementById("year");
+if (yearEl) {
+  yearEl.textContent = new Date().getFullYear();
+}
