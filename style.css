@@ -31,6 +31,15 @@ body.light {
   padding: 0;
 }
 
+/* Hide real cursor everywhere */
+body,
+a,
+button,
+input,
+textarea {
+  cursor: none;
+}
+
 html,
 body {
   height: 100%;
@@ -129,20 +138,28 @@ body {
   border-radius: 50%;
   z-index: 998;
   transition: transform 0.12s ease-out, opacity 0.2s ease-out;
+  transform: translate(-50%, -50%);
 }
 
+/* Neon game‑style cursor */
 .cursor-dot {
-  width: 6px;
-  height: 6px;
-  background: var(--accent-2);
-  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, #32e3ff 0, #7b5cff 60%, transparent 100%);
+  box-shadow: 0 0 16px rgba(50, 227, 255, 0.9);
 }
 
 .cursor-ring {
-  width: 32px;
-  height: 32px;
-  border: 1px solid rgba(50, 227, 255, 0.5);
-  transform: translate(-50%, -50%);
+  width: 42px;
+  height: 42px;
+  border: 2px solid rgba(123, 92, 255, 0.7);
+  box-shadow: 0 0 24px rgba(123, 92, 255, 0.7);
+}
+
+/* Click “pop” */
+body:active .cursor-ring {
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0.7;
 }
 
 /* Layout */
@@ -469,6 +486,7 @@ body:not(.light) .theme-icon.theme-dark {
   background: radial-gradient(circle at top, #161932, #070a1d 60%);
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: var(--shadow-soft);
+  transform-style: preserve-3d;
 }
 
 .term-header {
@@ -550,6 +568,7 @@ body:not(.light) .theme-icon.theme-dark {
   box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55);
   width: 33%;
   font-size: 0.8rem;
+  transform-style: preserve-3d;
 }
 
 .orbit-label {
@@ -573,6 +592,7 @@ body:not(.light) .theme-icon.theme-dark {
   border-radius: 18px;
   background: linear-gradient(145deg, rgba(11, 15, 40, 0.95), rgba(11, 15, 40, 0.7));
   border: 1px solid var(--border);
+  transform-style: preserve-3d;
 }
 
 .about-card h3 {
@@ -598,6 +618,7 @@ body:not(.light) .theme-icon.theme-dark {
   background: radial-gradient(circle at top left, rgba(123, 92, 255, 0.18), rgba(5, 7, 22, 0.96));
   border: 1px solid rgba(255, 255, 255, 0.05);
   box-shadow: var(--shadow-soft);
+  transform-style: preserve-3d;
 }
 
 .feature-card h3 {
@@ -654,7 +675,7 @@ body:not(.light) .theme-icon.theme-dark {
 /* PROJECTS / LABS */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1.3rem;
   margin-bottom: 2rem;
 }
@@ -665,6 +686,11 @@ body:not(.light) .theme-icon.theme-dark {
   background: linear-gradient(145deg, rgba(11, 15, 40, 0.98), rgba(11, 15, 40, 0.7));
   border: 1px solid var(--border);
   box-shadow: var(--shadow-soft);
+  transform-style: preserve-3d;
+}
+
+.project-card:hover {
+  cursor: none;
 }
 
 .project-header {
@@ -698,6 +724,7 @@ body:not(.light) .theme-icon.theme-dark {
   background: radial-gradient(circle at top, #111632, #050716 80%);
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: var(--shadow-soft);
+  transform-style: preserve-3d;
 }
 
 /* DOCS */
@@ -788,6 +815,7 @@ body:not(.light) .theme-icon.theme-dark {
   background: linear-gradient(145deg, rgba(11, 15, 40, 0.98), rgba(11, 15, 40, 0.7));
   border: 1px solid var(--border);
   box-shadow: var(--shadow-soft);
+  transform-style: preserve-3d;
 }
 
 .form-row {
@@ -843,6 +871,22 @@ body:not(.light) .theme-icon.theme-dark {
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* 3D tilt base */
+.tilt {
+  transform-style: preserve-3d;
+  transform: perspective(800px);
+  transition: transform 0.18s ease-out, box-shadow 0.18s ease-out;
+}
+
+.tilt-hover {
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.75);
+}
+
+/* Body flash when launching a lab */
+body.lab-launch {
+  background: radial-gradient(circle at center, #2a1a60 0, #050716 60%, #02010a 100%);
 }
 
 /* RESPONSIVE */
