@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Googuardiaan • CMD Learning Lab</title>
+  <title>Googuardiaan • CMD Learning Arcade</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,20 +15,19 @@
     <div class="loader-orbit">
       <span></span><span></span><span></span>
     </div>
-    <p>Booting Googuardiaan Lab...</p>
+    <p>Booting Googuardiaan Arcade...</p>
   </div>
 
-  <!-- Custom cursor -->
+  <!-- Custom neon cursor (real cursor hidden in CSS) -->
   <div class="cursor-dot" id="cursor-dot"></div>
   <div class="cursor-ring" id="cursor-ring"></div>
 
-  <!-- Background glow -->
+  <!-- Background glow/grid -->
   <div class="bg-orbit"></div>
   <div class="bg-grid"></div>
 
-  <!-- Main container -->
   <div class="container">
-    <!-- Header / Navbar -->
+    <!-- NAVBAR -->
     <header class="nav">
       <div class="nav-left">
         <div class="logo">
@@ -54,7 +53,7 @@
       </button>
     </header>
 
-    <!-- Mobile nav -->
+    <!-- MOBILE NAV -->
     <nav class="nav-mobile" id="nav-mobile">
       <a href="#hero" class="nav-link">Home</a>
       <a href="#about" class="nav-link">About</a>
@@ -65,18 +64,18 @@
       <a href="#contact" class="nav-link">Contact</a>
     </nav>
 
-    <!-- HERO -->
     <main>
+      <!-- HERO -->
       <section id="hero" class="section hero">
         <div class="hero-content">
-          <div class="hero-chip">CMD‑Style Program • Learning Tool</div>
+          <div class="hero-chip">CMD‑Style Program • Learning Arcade</div>
           <h1 class="hero-title">
             Learn how programs work<br />
-            by talking to a <span class="gradient-text">command prompt</span>.
+            by playing with a <span class="gradient-text">command prompt</span>.
           </h1>
           <p class="hero-subtitle">
             Googuardiaan is a terminal‑inspired sandbox that teaches inputs, outputs,
-            control flow, and basic reverse engineering concepts in a safe environment.
+            control flow, and ethical reverse engineering in a safe environment.
           </p>
           <div class="hero-actions">
             <a href="#projects" class="btn primary">Open Labs</a>
@@ -85,19 +84,19 @@
 
           <div class="hero-stats">
             <div class="stat-card">
-              <span class="stat-label">Commands</span>
-              <span class="stat-value">25+</span>
-              <span class="stat-foot">From <code>help</code> to custom flags</span>
+              <span class="stat-label">Mini‑labs</span>
+              <span class="stat-value">8+</span>
+              <span class="stat-foot">From basics to advanced puzzles</span>
             </div>
             <div class="stat-card">
-              <span class="stat-label">Learning Paths</span>
-              <span class="stat-value">4</span>
-              <span class="stat-foot">Basics • Args • I/O • Debugging</span>
+              <span class="stat-label">Game‑style</span>
+              <span class="stat-value">XP & Badges</span>
+              <span class="stat-foot">Progress by solving CMD quests</span>
             </div>
             <div class="stat-card">
-              <span class="stat-label">Difficulty</span>
-              <span class="stat-value">Beginner → Pro</span>
-              <span class="stat-foot">Progressive CMD challenges</span>
+              <span class="stat-label">Focus</span>
+              <span class="stat-value">Safe & Ethical</span>
+              <span class="stat-foot">No bypassing, just understanding</span>
             </div>
           </div>
         </div>
@@ -111,29 +110,29 @@
                 <span class="dot yellow"></span>
                 <span class="dot green"></span>
               </div>
-              <span class="term-title">C:\Googuardiaan\lab.exe</span>
+              <span class="term-title">C:\Googuardiaan\arcade.exe</span>
             </div>
             <div class="term-body" id="terminal-body">
               <div class="term-line">C:\User&gt; googuardiaan --intro</div>
-              <div class="term-line">Launching safe training sandbox...</div>
-              <div class="term-line">Type <span class="accent">help</span> to see available commands.</div>
-              <div class="term-line blinking">C:\Lab&gt; _</div>
+              <div class="term-line">Loading learning arcade...</div>
+              <div class="term-line">Type <span class="accent">help</span> to list safe labs.</div>
+              <div class="term-line blinking">C:\Arcade&gt; _</div>
             </div>
           </div>
 
           <!-- Orbit cards -->
           <div class="orbit-cards">
             <div class="orbit-card">
-              <span class="orbit-label">Reverse Engineer</span>
-              <p>Inspect pseudo‑code, follow branches, and predict program output.</p>
+              <span class="orbit-label">Game‑like CMD</span>
+              <p>Play through puzzles that feel like unblocked games, but teach real CLI logic.</p>
             </div>
             <div class="orbit-card">
               <span class="orbit-label">Safe Sandbox</span>
-              <p>Everything runs locally with no real system changes or risk.</p>
+              <p>Everything runs virtually, with no system changes or bypass tricks.</p>
             </div>
             <div class="orbit-card">
-              <span class="orbit-label">Gamified Labs</span>
-              <p>Earn badges by solving CMD puzzles and refactoring commands.</p>
+              <span class="orbit-label">Learn by Doing</span>
+              <p>Type commands, read feedback, and unlock harder labs as you improve.</p>
             </div>
           </div>
         </div>
@@ -142,34 +141,33 @@
       <!-- ABOUT -->
       <section id="about" class="section about">
         <div class="section-header">
-          <p class="section-kicker">About the App</p>
-          <h2>What is Googuardiaan?</h2>
+          <p class="section-kicker">About</p>
+          <h2>Googuardiaan is a CMD playground.</h2>
           <p class="section-subtitle">
-            Googuardiaan simulates a classic command prompt and guides users through
-            how programs parse arguments, read input, and produce output, without
-            touching any real system configuration.
+            It looks like a retro command prompt mixed with a modern game launcher,
+            but everything is focused on learning how programs think.
           </p>
         </div>
         <div class="about-grid">
           <div class="about-card">
-            <h3>Why I built it</h3>
+            <h3>Retro terminal vibe</h3>
             <p>
-              I wanted a way for people to explore the logic behind simple tools
-              without needing a full compiler, IDE, or admin rights.
+              The UI is inspired by classic command prompts, neon arcade machines,
+              and modern portfolio sites.
             </p>
           </div>
           <div class="about-card">
-            <h3>Who it’s for</h3>
+            <h3>Built for learners</h3>
             <p>
-              Students, hobbyists, and curious users who want to understand command
-              line programs, flags, and how reverse engineering is done ethically.
+              Perfect for students and hobbyists who want to understand variables,
+              branches, and I/O without setting up heavy tools.
             </p>
           </div>
           <div class="about-card">
-            <h3>Ethical focus</h3>
+            <h3>Ethical only</h3>
             <p>
-              All labs focus on debugging, analysis, and safe behavior—never on
-              bypassing security, policies, or restrictions.
+              Labs are designed to teach analysis and debugging, not to evade
+              security or monitoring systems.
             </p>
           </div>
         </div>
@@ -178,57 +176,53 @@
       <!-- FEATURES -->
       <section id="features" class="section features">
         <div class="section-header">
-          <p class="section-kicker">Core Features</p>
-          <h2>Terminal‑first, education‑focused design.</h2>
+          <p class="section-kicker">Features</p>
+          <h2>Terminal‑first, arcade‑style learning.</h2>
         </div>
         <div class="features-grid">
           <article class="feature-card">
             <h3>Interactive CLI</h3>
             <p>
-              Type commands directly into the simulated terminal and watch how the
-              parser reacts in real time.
+              Type commands into a simulated terminal and watch how the parser reacts.
             </p>
             <ul>
-              <li>Custom prompt styles</li>
-              <li>Command history & suggestions</li>
+              <li>Custom prompts</li>
+              <li>Command history</li>
               <li>Keyboard‑only support</li>
             </ul>
           </article>
 
           <article class="feature-card">
-            <h3>Step‑through Logic</h3>
+            <h3>Step‑through logic</h3>
             <p>
-              See each stage of a command, from argument parsing to branching and
-              final output.
+              See each stage of execution, from arguments to branches and final output.
             </p>
             <ul>
               <li>Visual pseudo‑code</li>
-              <li>Highlight current step</li>
-              <li>Replay execution</li>
+              <li>Highlighted steps</li>
+              <li>Replay runs</li>
             </ul>
           </article>
 
           <article class="feature-card">
-            <h3>Reverse‑Engineering Labs</h3>
+            <h3>Arcade labs</h3>
             <p>
-              Explore pre‑built programs, inspect their behavior, and infer how they
-              work using safe, guided exercises.
+              Each lab feels like a mini‑game, but every level teaches a real concept.
             </p>
             <ul>
-              <li>Input/output challenges</li>
-              <li>Control flow puzzles</li>
-              <li>Ethical analysis prompts</li>
+              <li>Levels & difficulty</li>
+              <li>XP progress</li>
+              <li>Unlockable labs</li>
             </ul>
           </article>
 
           <article class="feature-card">
-            <h3>Built‑in Notes</h3>
+            <h3>Built‑in notes</h3>
             <p>
-              Jot down your hypotheses and conclusions as you test different command
-              combinations.
+              Write down theories and answers while you experiment with different commands.
             </p>
             <ul>
-              <li>Session‑based notes</li>
+              <li>Session notes</li>
               <li>Export to text</li>
               <li>Keyboard shortcuts</li>
             </ul>
@@ -239,10 +233,9 @@
       <!-- SKILLS / TECH -->
       <section id="skills" class="section skills">
         <div class="section-header">
-          <p class="section-kicker">Tech Stack</p>
-          <h2>What powers Googuardiaan.</h2>
+          <p class="section-kicker">Tech & learning</p>
+          <h2>What powers it — and what you learn.</h2>
         </div>
-
         <div class="skills-grid">
           <div class="skills-column">
             <h3>Languages</h3>
@@ -251,84 +244,86 @@
             <div class="skill-pill">Python</div>
             <div class="skill-pill">Batch / CMD</div>
           </div>
-
           <div class="skills-column">
-            <h3>Concepts you’ll learn</h3>
+            <h3>Concepts</h3>
             <div class="skill-pill">CLI design</div>
-            <div class="skill-pill">Arguments & flags</div>
+            <div class="skill-pill">Args & flags</div>
             <div class="skill-pill">Standard I/O</div>
             <div class="skill-pill">Control flow</div>
             <div class="skill-pill">Static analysis</div>
           </div>
-
           <div class="skills-column">
-            <h3>Frontend for this site</h3>
+            <h3>This site</h3>
             <div class="skill-pill">HTML5</div>
-            <div class="skill-pill">CSS3 (Grid/Flex)</div>
+            <div class="skill-pill">CSS3</div>
             <div class="skill-pill">JavaScript</div>
-            <div class="skill-pill">GSAP‑style animations (vanilla)</div>
+            <div class="skill-pill">3D tilt UI</div>
           </div>
         </div>
       </section>
 
-      <!-- PROJECTS / LABS -->
+      <!-- LABS / PROJECTS -->
       <section id="projects" class="section projects">
         <div class="section-header">
-          <p class="section-kicker">Learning Labs</p>
-          <h2>Hands‑on CMD exercises.</h2>
+          <p class="section-kicker">Labs</p>
+          <h2>CMD learning arcade (unblocked‑style hub).</h2>
+          <p class="section-subtitle">
+            These tiles act like an “unblocked games” homepage, but every game is a safe
+            lab that explains how programs work.
+          </p>
         </div>
 
         <div class="projects-grid">
-          <article class="project-card">
+          <article class="project-card run-lab" data-lab="echo">
             <div class="project-header">
               <span class="project-tag">Beginner</span>
-              <h3>Echo & Args 101</h3>
+              <h3>🕹 Echo & Args Arcade</h3>
             </div>
             <p>
-              Learn how arguments are read and printed back, then extend the
-              behavior with flags like <code>--upper</code> and <code>--reverse</code>.
+              Learn how arguments are read and echoed back, then extend behavior with
+              flags like <code>--upper</code> and <code>--reverse</code>.
             </p>
-            <button class="btn small run-lab" data-lab="echo">Run demo</button>
+            <button class="btn small">Play lab</button>
           </article>
 
-          <article class="project-card">
+          <article class="project-card run-lab" data-lab="branch">
+            <div class="project-header">
+              <span class="project-tag">Beginner</span>
+              <h3>🔀 Branch Quest</h3>
+            </div>
+            <p>
+              Choose inputs and see which branch the program takes, like navigating a
+              story path.
+            </p>
+            <button class="btn small">Play lab</button>
+          </article>
+
+          <article class="project-card run-lab" data-lab="logs">
             <div class="project-header">
               <span class="project-tag">Intermediate</span>
-              <h3>Branch Explorer</h3>
+              <h3>📜 Log Decoder</h3>
             </div>
             <p>
-              Trace how a program chooses different branches based on user input and
-              environment variables.
+              Inspect fake logs, reconstruct which commands were used, and test your
+              guesses in the sandbox.
             </p>
-            <button class="btn small run-lab" data-lab="branch">Run demo</button>
+            <button class="btn small">Play lab</button>
           </article>
 
-          <article class="project-card">
-            <div class="project-header">
-              <span class="project-tag">Intermediate</span>
-              <h3>Log Decoder</h3>
-            </div>
-            <p>
-              Inspect sample logs, reconstruct what commands were likely run, and
-              check your hypotheses against the simulator.
-            </p>
-            <button class="btn small run-lab" data-lab="logs">Run demo</button>
-          </article>
-
-          <article class="project-card">
+          <article class="project-card run-lab" data-lab="disasm">
             <div class="project-header">
               <span class="project-tag">Advanced</span>
-              <h3>Pseudo‑Disassembler</h3>
+              <h3>🧠 Pseudo‑Disassembler</h3>
             </div>
             <p>
-              See a simplified “disassembly” of operations and map it back to
-              high‑level logic, focusing on learning—not exploitation.
+              See simplified low‑level steps and map them back to high‑level logic,
+              focusing on understanding, not exploitation.
             </p>
-            <button class="btn small run-lab" data-lab="disasm">Run demo</button>
+            <button class="btn small">Play lab</button>
           </article>
         </div>
 
-        <!-- Inline lab demo terminal -->
+        <!-- Labs demo terminal -->
         <div class="lab-terminal">
           <div class="term-header">
             <div class="term-dots">
@@ -339,7 +334,7 @@
             <span class="term-title">Lab Demo</span>
           </div>
           <div class="term-body" id="lab-output">
-            <div class="term-line">Select a lab above to preview a sample session.</div>
+            <div class="term-line">Select a lab tile above to preview a sample session.</div>
           </div>
         </div>
       </section>
@@ -347,10 +342,9 @@
       <!-- DOCS -->
       <section id="docs" class="section docs">
         <div class="section-header">
-          <p class="section-kicker">Documentation</p>
+          <p class="section-kicker">Docs</p>
           <h2>Commands & usage.</h2>
         </div>
-
         <div class="docs-layout">
           <aside class="docs-sidebar">
             <button class="docs-link active" data-doc="overview">Overview</button>
@@ -382,12 +376,12 @@ C:\Lab\Echo&gt; help
             <div class="doc-panel" id="doc-ethics">
               <h3>Ethical Use</h3>
               <p>
-                Googuardiaan is strictly for learning how software works. It must
-                never be used to bypass monitoring, policies, or security controls.
+                Googuardiaan exists to teach how software works, not how to bypass
+                security, filters, or monitoring systems.
               </p>
               <p>
-                Every lab includes prompts that emphasize responsible behavior and
-                legal boundaries.
+                Every lab focuses on debugging, reasoning, and safe behavior. Use it
+                to get better at programming and analysis, not to break rules.
               </p>
             </div>
           </article>
@@ -397,19 +391,17 @@ C:\Lab\Echo&gt; help
       <!-- CONTACT -->
       <section id="contact" class="section contact">
         <div class="section-header">
-          <p class="section-kicker">Get in touch</p>
+          <p class="section-kicker">Contact</p>
           <h2>Have feedback or ideas?</h2>
         </div>
-
         <div class="contact-layout">
           <div class="contact-info">
             <p>
-              Want to collaborate, test new labs, or suggest a feature? Reach out
-              and let me know how you’d like to use Googuardiaan in your own
-              learning journey.
+              Want to test labs, suggest a new CMD puzzle, or use Googuardiaan in a
+              class? Reach out and share your ideas.
             </p>
             <ul class="contact-list">
-              <li><span>Location:</span> the internet</li>
+              <li><span>Location:</span> Urbana, Ohio (USA)</li>
               <li><span>Email:</span> you@example.com</li>
               <li><span>GitHub:</span> github.com/your‑handle</li>
             </ul>
@@ -438,3 +430,4 @@ C:\Lab\Echo&gt; help
   <script src="script.js"></script>
 </body>
 </html>
+
