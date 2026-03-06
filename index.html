@@ -1,197 +1,336 @@
-// Loading screen
-window.addEventListener("load", () => {
-  const loader = document.getElementById("loader");
-  setTimeout(() => {
-    loader.style.opacity = "0";
-    loader.style.pointerEvents = "none";
-    setTimeout(() => loader.remove(), 400);
-  }, 1100);
-});
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Neon Study Arcade • Unblocked‑Style Games</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Loading screen -->
+  <div class="loader" id="loader">
+    <div class="loader-orbit">
+      <span></span><span></span><span></span>
+    </div>
+    <p>Booting Neon Study Arcade...</p>
+  </div>
 
-// Custom cursor movement
-const cursorDot = document.getElementById("cursor-dot");
-const cursorRing = document.getElementById("cursor-ring");
+  <!-- Custom neon cursor (real cursor hidden in CSS) -->
+  <div class="cursor-dot" id="cursor-dot"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
 
-window.addEventListener("pointermove", (e) => {
-  const { clientX, clientY } = e;
-  cursorDot.style.transform = `translate(${clientX}px, ${clientY}px)`;
-  cursorRing.style.transform = `translate(${clientX}px, ${clientY}px)`;
-});
+  <!-- Background glow/grid -->
+  <div class="bg-orbit"></div>
+  <div class="bg-grid"></div>
 
-// Theme toggle (light/dark)
-const toggle = document.getElementById("theme-toggle");
-const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
-if (prefersLight) document.body.classList.add("light");
+  <div class="container">
+    <!-- NAVBAR -->
+    <header class="nav">
+      <div class="nav-left">
+        <div class="logo">
+          <span class="logo-icon">&gt;</span>
+          <span class="logo-text">Neon Study Arcade<span class="logo-blink">_</span></span>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="#hero" class="nav-link active">Home</a>
+        <a href="#games" class="nav-link">Games</a>
+        <a href="#helper" class="nav-link">Homework</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span class="theme-icon theme-dark">🌙</span>
+        <span class="theme-icon theme-light">☀️</span>
+      </button>
+      <button class="nav-menu" id="nav-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </header>
 
-toggle.addEventListener("click", () => {
-  document.body.classList.toggle("light");
-});
+    <!-- MOBILE NAV -->
+    <nav class="nav-mobile" id="nav-mobile">
+      <a href="#hero" class="nav-link">Home</a>
+      <a href="#games" class="nav-link">Games</a>
+      <a href="#helper" class="nav-link">Homework</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
 
-// Mobile nav toggle
-const navMenu = document.getElementById("nav-menu");
-const navMobile = document.getElementById("nav-mobile");
-navMenu.addEventListener("click", () => {
-  navMobile.style.display =
-    navMobile.style.display === "flex" ? "none" : "flex";
-});
+    <main>
+      <!-- HERO -->
+      <section id="hero" class="section hero">
+        <div class="hero-content">
+          <div class="hero-chip">For Students • Free Time Fun</div>
+          <h1 class="hero-title">
+            Bored at school?<br />
+            Open the <span class="gradient-text">Neon Study Arcade</span>.
+          </h1>
+          <p class="hero-subtitle">
+            A clean, fast, unblocked‑style hub with quick games to kill boredom
+            and a built‑in homework helper so you can actually finish your work too.
+          </p>
+          <div class="hero-actions">
+            <a href="#games" class="btn primary">Browse Games</a>
+            <a href="#helper" class="btn ghost">Use Homework Helper</a>
+          </div>
 
-// Active nav links on scroll
-const sections = document.querySelectorAll("section");
-const navLinks = document.querySelectorAll(".nav-link");
+          <div class="hero-stats">
+            <div class="stat-card">
+              <span class="stat-label">Mini‑games</span>
+              <span class="stat-value">20+</span>
+              <span class="stat-foot">Arcade, puzzles & chill games</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Homework tools</span>
+              <span class="stat-value">Built‑in</span>
+              <span class="stat-foot">Tasks, timer, quick tips</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">For</span>
+              <span class="stat-value">Students</span>
+              <span class="stat-foot">Free time & study breaks</span>
+            </div>
+          </div>
+        </div>
 
-function setActiveLink() {
-  let current = "";
-  sections.forEach((section) => {
-    const top = window.scrollY;
-    const offset = section.offsetTop - 120;
-    const height = section.offsetHeight;
-    if (top >= offset && top < offset + height) {
-      current = "#" + section.id;
-    }
-  });
+        <!-- Animated terminal‑style panel -->
+        <div class="hero-panel">
+          <div class="term-window">
+            <div class="term-header">
+              <div class="term-dots">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+              </div>
+              <span class="term-title">Neon Study Arcade</span>
+            </div>
+            <div class="term-body" id="terminal-body">
+              <div class="term-line">welcome_player: launching arcade...</div>
+              <div class="term-line">tip: play a game, then finish one homework task.</div>
+              <div class="term-line">type "games" to see the library or "study" to open helper.</div>
+              <div class="term-line blinking">arcade&gt; _</div>
+            </div>
+          </div>
 
-  navLinks.forEach((link) => {
-    if (link.getAttribute("href") === current) link.classList.add("active");
-    else link.classList.remove("active");
-  });
-}
+          <!-- Orbit cards -->
+          <div class="orbit-cards">
+            <div class="orbit-card">
+              <span class="orbit-label">Quick breaks</span>
+              <p>Short games you can play between classes or during free time.</p>
+            </div>
+            <div class="orbit-card">
+              <span class="orbit-label">Study friendly</span>
+              <p>Homework helper panel to keep you on track while you chill.</p>
+            </div>
+            <div class="orbit-card">
+              <span class="orbit-label">No weird stuff</span>
+              <p>Just simple games and tools—no hacks, exploits, or shady links.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-window.addEventListener("scroll", setActiveLink);
+      <!-- GAMES HUB -->
+      <section id="games" class="section projects">
+        <div class="section-header">
+          <p class="section-kicker">Games</p>
+          <h2>Neon game wall for bored students.</h2>
+          <p class="section-subtitle">
+            Pick a tile to see a fake terminal preview. You can later swap these
+            with iframes or links to real games you host elsewhere.
+          </p>
+        </div>
 
-// Scroll reveal
-const revealEls = document.querySelectorAll(
-  ".section, .hero-stats, .about-card, .feature-card, .project-card, .lab-terminal, .docs-layout, .contact-layout"
-);
-revealEls.forEach((el) => el.classList.add("reveal"));
+        <div class="games-filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="chill">Chill</button>
+          <button class="filter-btn" data-filter="arcade">Arcade</button>
+          <button class="filter-btn" data-filter="puzzle">Puzzles</button>
+        </div>
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        observer.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.2 }
-);
+        <div class="projects-grid" id="games-grid">
+          <article class="project-card run-game" data-game="runner" data-type="arcade">
+            <div class="project-header">
+              <span class="project-tag">Arcade</span>
+              <h3>🛸 Neon Runner</h3>
+            </div>
+            <p>Dodge obstacles, collect orbs, and try not to crash before the bell rings.</p>
+            <button class="btn small">Preview</button>
+          </article>
 
-revealEls.forEach((el) => observer.observe(el));
+          <article class="project-card run-game" data-game="stack" data-type="puzzle">
+            <div class="project-header">
+              <span class="project-tag">Puzzle</span>
+              <h3>🧱 Pixel Stack</h3>
+            </div>
+            <p>Stack blocks perfectly to build the tallest tower in class.</p>
+            <button class="btn small">Preview</button>
+          </article>
 
-// 3D tilt on cards
-function attachTilt(selector) {
-  const cards = document.querySelectorAll(selector);
-  cards.forEach((card) => {
-    card.classList.add("tilt");
-    const strength = 14;
+          <article class="project-card run-game" data-game="chill" data-type="chill">
+            <div class="project-header">
+              <span class="project-tag">Chill</span>
+              <h3>🌌 Space Idle</h3>
+            </div>
+            <p>Slow, relaxing clicker you can check between homework questions.</p>
+            <button class="btn small">Preview</button>
+          </article>
 
-    card.addEventListener("pointermove", (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const rotateY = ((x / rect.width) - 0.5) * strength;
-      const rotateX = ((y / rect.height) - 0.5) * -strength;
-      card.style.transform =
-        `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
-      card.classList.add("tilt-hover");
-    });
+          <article class="project-card run-game" data-game="memory" data-type="puzzle">
+            <div class="project-header">
+              <span class="project-tag">Puzzle</span>
+              <h3>🧠 Memory Match</h3>
+            </div>
+            <p>Flip cards, remember patterns, and beat your last score.</p>
+            <button class="btn small">Preview</button>
+          </article>
+        </div>
 
-    card.addEventListener("pointerleave", () => {
-      card.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
-      card.classList.remove("tilt-hover");
-    });
-  });
-}
+        <!-- Games demo terminal -->
+        <div class="lab-terminal">
+          <div class="term-header">
+            <div class="term-dots">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <span class="term-title">Game Preview</span>
+          </div>
+          <div class="term-body" id="game-output">
+            <div class="term-line">Click a game tile above to see a quick preview here.</div>
+            <div class="term-line">Later you can embed the real game instead of this text.</div>
+          </div>
+        </div>
+      </section>
 
-attachTilt(".project-card");
-attachTilt(".feature-card");
-attachTilt(".about-card");
-attachTilt(".term-window");
-attachTilt(".lab-terminal");
-attachTilt(".orbit-card");
-attachTilt(".contact-form");
+      <!-- HOMEWORK HELPER -->
+      <section id="helper" class="section helper">
+        <div class="section-header">
+          <p class="section-kicker">Homework Helper</p>
+          <h2>Do a little work, then go back to playing.</h2>
+          <p class="section-subtitle">
+            Use this panel to list homework, set a quick timer, and get simple tips
+            so you don’t completely forget your assignments.
+          </p>
+        </div>
 
-// Lab demos
-const labOutput = document.getElementById("lab-output");
-const labCards = document.querySelectorAll(".run-lab");
+        <div class="helper-layout">
+          <!-- Task list -->
+          <div class="helper-card">
+            <h3>📓 Task list</h3>
+            <div class="task-input-row">
+              <input type="text" id="task-input" placeholder="Example: Finish math worksheet" />
+              <button id="add-task" class="btn small">Add</button>
+            </div>
+            <ul id="task-list" class="task-list">
+              <!-- tasks added here -->
+            </ul>
+          </div>
 
-const labScripts = {
-  echo: [
-    "C:\\User> run echo --text \"Hello, Googuardiaan\"",
-    "[parser] command: echo",
-    "[parser] flag: --text",
-    "[exec] output: Hello, Googuardiaan"
-  ],
-  branch: [
-    "C:\\User> run branch --mode safe",
-    "[input] mode = safe",
-    "[branch] taking safe path...",
-    "[exec] sandbox enabled, no real files touched"
-  ],
-  logs: [
-    "C:\\User> run logs --source sample.txt",
-    "[io] reading 32 lines...",
-    "[analysis] 3 unique commands detected",
-    "[task] guess the missing flags"
-  ],
-  disasm: [
-    "C:\\User> run disasm --file demo.bin",
-    "[loader] reading pseudo ops...",
-    "[view] jmp -> while loop",
-    "[tip] map low-level steps back to if/else"
-  ]
-};
+          <!-- Timer & quick tips -->
+          <div class="helper-card">
+            <h3>⏱ Focus timer</h3>
+            <p class="helper-text">
+              Set a short focus burst, finish one thing, then return to your game.
+            </p>
+            <div class="timer-controls">
+              <select id="timer-minutes">
+                <option value="5">5 minutes</option>
+                <option value="10">10 minutes</option>
+                <option value="15">15 minutes</option>
+                <option value="20">20 minutes</option>
+              </select>
+              <button id="start-timer" class="btn small">Start</button>
+              <button id="reset-timer" class="btn small">Reset</button>
+            </div>
+            <div class="timer-display" id="timer-display">00:00</div>
 
-labCards.forEach((card) => {
-  card.addEventListener("click", () => {
-    const lab = card.dataset.lab;
-    const lines = labScripts[lab] || [];
+            <h3 class="tips-title">💡 Quick study tips</h3>
+            <ul class="tips-list" id="tips-list">
+              <!-- random tips appear here -->
+            </ul>
+          </div>
+        </div>
+      </section>
 
-    // Background flash to feel like launching a game
-    document.body.classList.add("lab-launch");
-    setTimeout(() => document.body.classList.remove("lab-launch"), 250);
+      <!-- ABOUT -->
+      <section id="about" class="section about">
+        <div class="section-header">
+          <p class="section-kicker">About</p>
+          <h2>Made for bored students, not rule‑breakers.</h2>
+          <p class="section-subtitle">
+            This is a personal project: a clean homepage that looks like an unblocked
+            games site but stays focused on chill games and homework help.
+          </p>
+        </div>
+        <div class="about-grid">
+          <div class="about-card">
+            <h3>Simple idea</h3>
+            <p>
+              Give students something fun to click on during downtime, without tons
+              of ads or sketchy popups.
+            </p>
+          </div>
+          <div class="about-card">
+            <h3>Study + play</h3>
+            <p>
+              The homework helper panel makes it easier to remember assignments and
+              keep track of what you actually need to finish.
+            </p>
+          </div>
+          <div class="about-card">
+            <h3>No bypass tools</h3>
+            <p>
+              This site is not made to hack, bypass filters, or mess with school
+              systems—just games and simple study tools.
+            </p>
+          </div>
+        </div>
+      </section>
 
-    labOutput.innerHTML = "";
-    lines.forEach((line, i) => {
-      setTimeout(() => {
-        const div = document.createElement("div");
-        div.className = "term-line";
-        div.textContent = line;
-        labOutput.appendChild(div);
-        labOutput.scrollTop = labOutput.scrollHeight;
-      }, i * 320);
-    });
-  });
-});
+      <!-- CONTACT -->
+      <section id="contact" class="section contact">
+        <div class="section-header">
+          <p class="section-kicker">Contact</p>
+          <h2>Have a game suggestion?</h2>
+        </div>
+        <div class="contact-layout">
+          <div class="contact-info">
+            <p>
+              Want to suggest a game, report a broken link, or request a new homework
+              helper feature? Send a quick message.
+            </p>
+            <ul class="contact-list">
+              <li><span>Location:</span> Urbana, Ohio (USA)</li>
+              <li><span>Email:</span> you@example.com</li>
+              <li><span>GitHub:</span> github.com/your‑handle</li>
+            </ul>
+          </div>
 
-// Docs tabs
-const docButtons = document.querySelectorAll(".docs-link");
-const docPanels = document.querySelectorAll(".doc-panel");
+          <form class="contact-form" id="contact-form">
+            <div class="form-row">
+              <input type="text" name="name" placeholder="Name" required />
+              <input type="email" name="email" placeholder="Email" required />
+            </div>
+            <input type="text" name="subject" placeholder="Subject" />
+            <textarea name="message" rows="4" placeholder="Your message..."></textarea>
+            <button type="submit" class="btn primary">Send Message</button>
+            <p class="form-status" id="form-status"></p>
+          </form>
+        </div>
+      </section>
+    </main>
 
-docButtons.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const id = btn.dataset.doc;
-    docButtons.forEach((b) => b.classList.remove("active"));
-    btn.classList.add("active");
-    docPanels.forEach((panel) => {
-      panel.classList.toggle("active", panel.id === `doc-${id}`);
-    });
-  });
-});
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p>© <span id="year"></span> Neon Study Arcade • For chill breaks and homework help.</p>
+    </footer>
+  </div>
 
-// Fake contact form handler
-const form = document.getElementById("contact-form");
-const statusEl = document.getElementById("form-status");
-
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  statusEl.textContent = "Sending...";
-  setTimeout(() => {
-    statusEl.textContent =
-      "Thanks! This demo doesn’t actually send email, but your message was captured locally.";
-    form.reset();
-  }, 700);
-});
-
-// Footer year
-document.getElementById("year").textContent = new Date().getFullYear();
+  <script src="script.js"></script>
+</body>
+</html>
