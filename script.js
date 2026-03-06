@@ -8,7 +8,7 @@ window.addEventListener("load", () => {
   }, 1100);
 });
 
-// Custom cursor
+// Custom cursor movement
 const cursorDot = document.getElementById("cursor-dot");
 const cursorRing = document.getElementById("cursor-ring");
 
@@ -18,7 +18,7 @@ window.addEventListener("pointermove", (e) => {
   cursorRing.style.transform = `translate(${clientX}px, ${clientY}px)`;
 });
 
-// Theme toggle
+// Theme toggle (light/dark)
 const toggle = document.getElementById("theme-toggle");
 const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
 if (prefersLight) document.body.classList.add("light");
@@ -27,7 +27,7 @@ toggle.addEventListener("click", () => {
   document.body.classList.toggle("light");
 });
 
-// Mobile nav
+// Mobile nav toggle
 const navMenu = document.getElementById("nav-menu");
 const navMobile = document.getElementById("nav-mobile");
 navMenu.addEventListener("click", () => {
@@ -78,9 +78,42 @@ const observer = new IntersectionObserver(
 
 revealEls.forEach((el) => observer.observe(el));
 
+// 3D tilt on cards
+function attachTilt(selector) {
+  const cards = document.querySelectorAll(selector);
+  cards.forEach((card) => {
+    card.classList.add("tilt");
+    const strength = 14;
+
+    card.addEventListener("pointermove", (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const rotateY = ((x / rect.width) - 0.5) * strength;
+      const rotateX = ((y / rect.height) - 0.5) * -strength;
+      card.style.transform =
+        `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+      card.classList.add("tilt-hover");
+    });
+
+    card.addEventListener("pointerleave", () => {
+      card.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
+      card.classList.remove("tilt-hover");
+    });
+  });
+}
+
+attachTilt(".project-card");
+attachTilt(".feature-card");
+attachTilt(".about-card");
+attachTilt(".term-window");
+attachTilt(".lab-terminal");
+attachTilt(".orbit-card");
+attachTilt(".contact-form");
+
 // Lab demos
 const labOutput = document.getElementById("lab-output");
-const labButtons = document.querySelectorAll(".run-lab");
+const labCards = document.querySelectorAll(".run-lab");
 
 const labScripts = {
   echo: [
@@ -109,10 +142,15 @@ const labScripts = {
   ]
 };
 
-labButtons.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const lab = btn.dataset.lab;
+labCards.forEach((card) => {
+  card.addEventListener("click", () => {
+    const lab = card.dataset.lab;
     const lines = labScripts[lab] || [];
+
+    // Background flash to feel like launching a game
+    document.body.classList.add("lab-launch");
+    setTimeout(() => document.body.classList.remove("lab-launch"), 250);
+
     labOutput.innerHTML = "";
     lines.forEach((line, i) => {
       setTimeout(() => {
@@ -141,7 +179,7 @@ docButtons.forEach((btn) => {
   });
 });
 
-// Contact form (fake)
+// Fake contact form handler
 const form = document.getElementById("contact-form");
 const statusEl = document.getElementById("form-status");
 
