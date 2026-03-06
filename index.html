@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Googuardiaan • CMD Learning Lab</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Loading screen -->
+  <div class="loader" id="loader">
+    <div class="loader-orbit">
+      <span></span><span></span><span></span>
+    </div>
+    <p>Booting Googuardiaan Lab...</p>
+  </div>
+
+  <!-- Custom cursor -->
+  <div class="cursor-dot" id="cursor-dot"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
+
+  <!-- Background glow -->
+  <div class="bg-orbit"></div>
+  <div class="bg-grid"></div>
+
+  <!-- Main container -->
+  <div class="container">
+    <!-- Header / Navbar -->
+    <header class="nav">
+      <div class="nav-left">
+        <div class="logo">
+          <span class="logo-icon">&gt;</span>
+          <span class="logo-text">Googuardiaan<span class="logo-blink">_</span></span>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="#hero" class="nav-link active">Home</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#projects" class="nav-link">Labs</a>
+        <a href="#docs" class="nav-link">Docs</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span class="theme-icon theme-dark">🌙</span>
+        <span class="theme-icon theme-light">☀️</span>
+      </button>
+      <button class="nav-menu" id="nav-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </header>
+
+    <!-- Mobile nav -->
+    <nav class="nav-mobile" id="nav-mobile">
+      <a href="#hero" class="nav-link">Home</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#features" class="nav-link">Features</a>
+      <a href="#skills" class="nav-link">Skills</a>
+      <a href="#projects" class="nav-link">Labs</a>
+      <a href="#docs" class="nav-link">Docs</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+
+    <!-- HERO -->
+    <main>
+      <section id="hero" class="section hero">
+        <div class="hero-content">
+          <div class="hero-chip">CMD‑Style Program • Learning Tool</div>
+          <h1 class="hero-title">
+            Learn how programs work<br />
+            by talking to a <span class="gradient-text">command prompt</span>.
+          </h1>
+          <p class="hero-subtitle">
+            Googuardiaan is a terminal‑inspired sandbox that teaches inputs, outputs,
+            control flow, and basic reverse engineering concepts in a safe environment.
+          </p>
+          <div class="hero-actions">
+            <a href="#projects" class="btn primary">Open Labs</a>
+            <a href="#docs" class="btn ghost">View Docs</a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat-card">
+              <span class="stat-label">Commands</span>
+              <span class="stat-value">25+</span>
+              <span class="stat-foot">From <code>help</code> to custom flags</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Learning Paths</span>
+              <span class="stat-value">4</span>
+              <span class="stat-foot">Basics • Args • I/O • Debugging</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Difficulty</span>
+              <span class="stat-value">Beginner → Pro</span>
+              <span class="stat-foot">Progressive CMD challenges</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Animated terminal panel -->
+        <div class="hero-panel">
+          <div class="term-window">
+            <div class="term-header">
+              <div class="term-dots">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+              </div>
+              <span class="term-title">C:\Googuardiaan\lab.exe</span>
+            </div>
+            <div class="term-body" id="terminal-body">
+              <div class="term-line">C:\User&gt; googuardiaan --intro</div>
+              <div class="term-line">Launching safe training sandbox...</div>
+              <div class="term-line">Type <span class="accent">help</span> to see available commands.</div>
+              <div class="term-line blinking">C:\Lab&gt; _</div>
+            </div>
+          </div>
+
+          <!-- Orbit cards -->
+          <div class="orbit-cards">
+            <div class="orbit-card">
+              <span class="orbit-label">Reverse Engineer</span>
+              <p>Inspect pseudo‑code, follow branches, and predict program output.</p>
+            </div>
+            <div class="orbit-card">
+              <span class="orbit-label">Safe Sandbox</span>
+              <p>Everything runs locally with no real system changes or risk.</p>
+            </div>
+            <div class="orbit-card">
+              <span class="orbit-label">Gamified Labs</span>
+              <p>Earn badges by solving CMD puzzles and refactoring commands.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT -->
+      <section id="about" class="section about">
+        <div class="section-header">
+          <p class="section-kicker">About the App</p>
+          <h2>What is Googuardiaan?</h2>
+          <p class="section-subtitle">
+            Googuardiaan simulates a classic command prompt and guides users through
+            how programs parse arguments, read input, and produce output, without
+            touching any real system configuration.
+          </p>
+        </div>
+        <div class="about-grid">
+          <div class="about-card">
+            <h3>Why I built it</h3>
+            <p>
+              I wanted a way for people to explore the logic behind simple tools
+              without needing a full compiler, IDE, or admin rights.
+            </p>
+          </div>
+          <div class="about-card">
+            <h3>Who it’s for</h3>
+            <p>
+              Students, hobbyists, and curious users who want to understand command
+              line programs, flags, and how reverse engineering is done ethically.
+            </p>
+          </div>
+          <div class="about-card">
+            <h3>Ethical focus</h3>
+            <p>
+              All labs focus on debugging, analysis, and safe behavior—never on
+              bypassing security, policies, or restrictions.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FEATURES -->
+      <section id="features" class="section features">
+        <div class="section-header">
+          <p class="section-kicker">Core Features</p>
+          <h2>Terminal‑first, education‑focused design.</h2>
+        </div>
+        <div class="features-grid">
+          <article class="feature-card">
+            <h3>Interactive CLI</h3>
+            <p>
+              Type commands directly into the simulated terminal and watch how the
+              parser reacts in real time.
+            </p>
+            <ul>
+              <li>Custom prompt styles</li>
+              <li>Command history & suggestions</li>
+              <li>Keyboard‑only support</li>
+            </ul>
+          </article>
+
+          <article class="feature-card">
+            <h3>Step‑through Logic</h3>
+            <p>
+              See each stage of a command, from argument parsing to branching and
+              final output.
+            </p>
+            <ul>
+              <li>Visual pseudo‑code</li>
+              <li>Highlight current step</li>
+              <li>Replay execution</li>
+            </ul>
+          </article>
+
+          <article class="feature-card">
+            <h3>Reverse‑Engineering Labs</h3>
+            <p>
+              Explore pre‑built programs, inspect their behavior, and infer how they
+              work using safe, guided exercises.
+            </p>
+            <ul>
+              <li>Input/output challenges</li>
+              <li>Control flow puzzles</li>
+              <li>Ethical analysis prompts</li>
+            </ul>
+          </article>
+
+          <article class="feature-card">
+            <h3>Built‑in Notes</h3>
+            <p>
+              Jot down your hypotheses and conclusions as you test different command
+              combinations.
+            </p>
+            <ul>
+              <li>Session‑based notes</li>
+              <li>Export to text</li>
+              <li>Keyboard shortcuts</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- SKILLS / TECH -->
+      <section id="skills" class="section skills">
+        <div class="section-header">
+          <p class="section-kicker">Tech Stack</p>
+          <h2>What powers Googuardiaan.</h2>
+        </div>
+
+        <div class="skills-grid">
+          <div class="skills-column">
+            <h3>Languages</h3>
+            <div class="skill-pill">C#</div>
+            <div class="skill-pill">C++</div>
+            <div class="skill-pill">Python</div>
+            <div class="skill-pill">Batch / CMD</div>
+          </div>
+
+          <div class="skills-column">
+            <h3>Concepts you’ll learn</h3>
+            <div class="skill-pill">CLI design</div>
+            <div class="skill-pill">Arguments & flags</div>
+            <div class="skill-pill">Standard I/O</div>
+            <div class="skill-pill">Control flow</div>
+            <div class="skill-pill">Static analysis</div>
+          </div>
+
+          <div class="skills-column">
+            <h3>Frontend for this site</h3>
+            <div class="skill-pill">HTML5</div>
+            <div class="skill-pill">CSS3 (Grid/Flex)</div>
+            <div class="skill-pill">JavaScript</div>
+            <div class="skill-pill">GSAP‑style animations (vanilla)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJECTS / LABS -->
+      <section id="projects" class="section projects">
+        <div class="section-header">
+          <p class="section-kicker">Learning Labs</p>
+          <h2>Hands‑on CMD exercises.</h2>
+        </div>
+
+        <div class="projects-grid">
+          <article class="project-card">
+            <div class="project-header">
+              <span class="project-tag">Beginner</span>
+              <h3>Echo & Args 101</h3>
+            </div>
+            <p>
+              Learn how arguments are read and printed back, then extend the
+              behavior with flags like <code>--upper</code> and <code>--reverse</code>.
+            </p>
+            <button class="btn small run-lab" data-lab="echo">Run demo</button>
+          </article>
+
+          <article class="project-card">
+            <div class="project-header">
+              <span class="project-tag">Intermediate</span>
+              <h3>Branch Explorer</h3>
+            </div>
+            <p>
+              Trace how a program chooses different branches based on user input and
+              environment variables.
+            </p>
+            <button class="btn small run-lab" data-lab="branch">Run demo</button>
+          </article>
+
+          <article class="project-card">
+            <div class="project-header">
+              <span class="project-tag">Intermediate</span>
+              <h3>Log Decoder</h3>
+            </div>
+            <p>
+              Inspect sample logs, reconstruct what commands were likely run, and
+              check your hypotheses against the simulator.
+            </p>
+            <button class="btn small run-lab" data-lab="logs">Run demo</button>
+          </article>
+
+          <article class="project-card">
+            <div class="project-header">
+              <span class="project-tag">Advanced</span>
+              <h3>Pseudo‑Disassembler</h3>
+            </div>
+            <p>
+              See a simplified “disassembly” of operations and map it back to
+              high‑level logic, focusing on learning—not exploitation.
+            </p>
+            <button class="btn small run-lab" data-lab="disasm">Run demo</button>
+          </article>
+        </div>
+
+        <!-- Inline lab demo terminal -->
+        <div class="lab-terminal">
+          <div class="term-header">
+            <div class="term-dots">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <span class="term-title">Lab Demo</span>
+          </div>
+          <div class="term-body" id="lab-output">
+            <div class="term-line">Select a lab above to preview a sample session.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DOCS -->
+      <section id="docs" class="section docs">
+        <div class="section-header">
+          <p class="section-kicker">Documentation</p>
+          <h2>Commands & usage.</h2>
+        </div>
+
+        <div class="docs-layout">
+          <aside class="docs-sidebar">
+            <button class="docs-link active" data-doc="overview">Overview</button>
+            <button class="docs-link" data-doc="commands">Commands</button>
+            <button class="docs-link" data-doc="ethics">Ethical Use</button>
+          </aside>
+          <article class="docs-content">
+            <div class="doc-panel active" id="doc-overview">
+              <h3>Overview</h3>
+              <p>
+                Googuardiaan runs as a CMD‑style program. You type commands and
+                options, and it simulates how a simple tool would respond.
+              </p>
+              <pre><code>C:\User&gt; googuardiaan --lab echo
+C:\Lab\Echo&gt; help
+              </code></pre>
+            </div>
+
+            <div class="doc-panel" id="doc-commands">
+              <h3>Commands</h3>
+              <ul>
+                <li><code>help</code> – Show all available commands.</li>
+                <li><code>run &lt;lab&gt;</code> – Start a learning lab.</li>
+                <li><code>explain</code> – Show step‑by‑step breakdown.</li>
+                <li><code>notes</code> – Open the in‑app notebook.</li>
+              </ul>
+            </div>
+
+            <div class="doc-panel" id="doc-ethics">
+              <h3>Ethical Use</h3>
+              <p>
+                Googuardiaan is strictly for learning how software works. It must
+                never be used to bypass monitoring, policies, or security controls.
+              </p>
+              <p>
+                Every lab includes prompts that emphasize responsible behavior and
+                legal boundaries.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" class="section contact">
+        <div class="section-header">
+          <p class="section-kicker">Get in touch</p>
+          <h2>Have feedback or ideas?</h2>
+        </div>
+
+        <div class="contact-layout">
+          <div class="contact-info">
+            <p>
+              Want to collaborate, test new labs, or suggest a feature? Reach out
+              and let me know how you’d like to use Googuardiaan in your own
+              learning journey.
+            </p>
+            <ul class="contact-list">
+              <li><span>Location:</span> the internet</li>
+              <li><span>Email:</span> you@example.com</li>
+              <li><span>GitHub:</span> github.com/your‑handle</li>
+            </ul>
+          </div>
+
+          <form class="contact-form" id="contact-form">
+            <div class="form-row">
+              <input type="text" name="name" placeholder="Name" required />
+              <input type="email" name="email" placeholder="Email" required />
+            </div>
+            <input type="text" name="subject" placeholder="Subject" />
+            <textarea name="message" rows="4" placeholder="Your message..."></textarea>
+            <button type="submit" class="btn primary">Send Message</button>
+            <p class="form-status" id="form-status"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p>© <span id="year"></span> Googuardiaan • Built for learning, not bypassing.</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
