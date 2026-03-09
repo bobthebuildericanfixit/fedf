@@ -1,4 +1,4 @@
-// Custom cursor movement
+// ===== Custom cursor =====
 const cursorDot = document.getElementById("cursor-dot");
 const cursorRing = document.getElementById("cursor-ring");
 
@@ -8,62 +8,7 @@ window.addEventListener("pointermove", (e) => {
   if (cursorRing) cursorRing.style.transform = `translate(${clientX}px, ${clientY}px)`;
 });
 
-// Theme toggle with persistent setting
-const themeToggleBtn = document.getElementById("theme-toggle");
-
-function getPreferredTheme() {
-  const stored = localStorage.getItem("king-theme");
-  if (stored === "light" || stored === "dark") return stored;
-
-  const prefersDark = window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches;
-  return prefersDark ? "dark" : "light";
-}
-
-function applyTheme(theme) {
-  document.body.classList.remove("theme-dark", "theme-light");
-  document.body.classList.add(theme === "dark" ? "theme-dark" : "theme-light");
-}
-
-// initialize theme
-const initialTheme = getPreferredTheme();
-applyTheme(initialTheme);
-
-if (themeToggleBtn) {
-  themeToggleBtn.addEventListener("click", () => {
-    const current = document.body.classList.contains("theme-dark") ? "dark" : "light";
-    const next = current === "dark" ? "light" : "dark";
-    applyTheme(next);
-    localStorage.setItem("king-theme", next);
-  });
-}
-
-// Accent color customization
-const accentButtons = document.querySelectorAll(".accent-swatch");
-
-function setAccent(color) {
-  // base accent
-  document.documentElement.style.setProperty("--accent", color);
-  // soft accent with alpha; if browser does not support this hex+alpha,
-  // you can replace it with a fixed rgba in the CSS
-  document.documentElement.style.setProperty("--accent-soft", color + "40");
-  localStorage.setItem("king-accent", color);
-}
-
-// load stored accent
-const savedAccent = localStorage.getItem("king-accent");
-if (savedAccent) {
-  setAccent(savedAccent);
-}
-
-accentButtons.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const color = btn.dataset.accent;
-    if (color) setAccent(color);
-  });
-});
-
-// Mobile nav
+// ===== Mobile nav =====
 const navMenu = document.getElementById("nav-menu");
 const navMobile = document.getElementById("nav-mobile");
 
@@ -74,7 +19,7 @@ if (navMenu && navMobile) {
   });
 }
 
-// Smooth scrolling for nav and hero buttons
+// ===== Smooth scroll =====
 function smoothScrollTo(targetId) {
   const el = document.querySelector(targetId);
   if (!el) return;
@@ -92,7 +37,7 @@ document.querySelectorAll(".nav-link, .scroll-link").forEach((link) => {
   });
 });
 
-// Active nav links on scroll
+// ===== Active nav on scroll =====
 const sections = document.querySelectorAll("section");
 const navLinks = document.querySelectorAll(".nav-link");
 
@@ -118,9 +63,9 @@ function setActiveLink() {
 window.addEventListener("scroll", setActiveLink);
 setActiveLink();
 
-// Scroll reveal
+// ===== Scroll reveal =====
 const revealEls = document.querySelectorAll(
-  ".section, .hero-card, .game-card, .game-viewer, .helper-card, .about-card, .contact-layout"
+  ".section, .hero-card, .game-card, .game-viewer, .helper-card, .about-card, .contact-layout, .featured-game, .idea-card"
 );
 revealEls.forEach((el) => el.classList.add("reveal"));
 
@@ -138,98 +83,257 @@ const observer = new IntersectionObserver(
 
 revealEls.forEach((el) => observer.observe(el));
 
-// 3D tilt
-function attachTilt(selector) {
-  const cards = document.querySelectorAll(selector);
-  cards.forEach((card) => {
-    card.classList.add("tilt");
-    const strength = 14;
+// ===== Game data (rating, plays, categories, videos) =====
+const gamesData = [
+  {
+    id: "runner",
+    title: "Neon Runner",
+    description: "Fast endless runner—dodge obstacles and beat the clock.",
+    url: "https://example.com/games/neon-runner",
+    categories: ["arcade"],
+    tags: ["Arcade", "Reflex"],
+    rating: 4.7,
+    plays: 12540,
+    thumbnailClass: "game-thumb-1",
+    previewVideo: "https://example.com/previews/neon-runner.mp4"
+  },
+  {
+    id: "stack",
+    title: "Pixel Stack",
+    description: "Time your drops to build a perfectly stacked tower.",
+    url: "https://example.com/games/pixel-stack",
+    categories: ["puzzle"],
+    tags: ["Puzzle", "Timing"],
+    rating: 4.3,
+    plays: 8420,
+    thumbnailClass: "game-thumb-2",
+    previewVideo: "https://example.com/previews/pixel-stack.mp4"
+  },
+  {
+    id: "chill",
+    title: "Space Idle",
+    description: "Idle galaxy builder you can check between homework tasks.",
+    url: "https://example.com/games/space-idle",
+    categories: ["chill"],
+    tags: ["Chill", "Idle"],
+    rating: 4.5,
+    plays: 9650,
+    thumbnailClass: "game-thumb-3",
+    previewVideo: "https://example.com/previews/space-idle.mp4"
+  },
+  {
+    id: "memory",
+    title: "Memory Match",
+    description: "Flip cards, track positions, and beat your last score.",
+    url: "https://example.com/games/memory-match",
+    categories: ["puzzle"],
+    tags: ["Puzzle", "Memory"],
+    rating: 4.1,
+    plays: 6780,
+    thumbnailClass: "game-thumb-4",
+    previewVideo: "https://example.com/previews/memory-match.mp4"
+  }
+  // Add more games here as you build them out
+];
 
-    card.addEventListener("pointermove", (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const rotateY = ((x / rect.width) - 0.5) * strength;
-      const rotateX = ((y / rect.height) - 0.5) * -strength;
-      card.style.transform =
-        `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
-      card.classList.add("tilt-hover");
-    });
+const gamesGrid = document.getElementById("games-grid");
+const gameSearchInput = document.getElementById("game-search");
+const filterButtons = document.querySelectorAll(".filter-btn");
 
-    card.addEventListener("pointerleave", () => {
-      card.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
-      card.classList.remove("tilt-hover");
-    });
+let currentFilter = "all";
+let currentSearch = "";
+let currentGameUrl = null;
+
+// ===== Render games =====
+function formatPlays(n) {
+  if (n >= 1_000_000) return (n / 1_000_000).toFixed(1) + "M plays";
+  if (n >= 1_000) return Math.round(n / 100) / 10 + "k plays";
+  return n + " plays";
+}
+
+function renderStars(rating) {
+  const fullStars = Math.round(rating);
+  const maxStars = 5;
+  let stars = "";
+  for (let i = 0; i < maxStars; i++) {
+    stars += i < fullStars ? "★" : "☆";
+  }
+  return stars;
+}
+
+function matchesFilter(game) {
+  if (currentFilter === "all") return true;
+  return game.categories.includes(currentFilter);
+}
+
+function matchesSearch(game) {
+  if (!currentSearch) return true;
+  return game.title.toLowerCase().includes(currentSearch);
+}
+
+function renderGames() {
+  if (!gamesGrid) return;
+  gamesGrid.innerHTML = "";
+
+  const toShow = gamesData.filter((g) => matchesFilter(g) && matchesSearch(g));
+
+  toShow.forEach((game) => {
+    const card = document.createElement("article");
+    card.className = "game-card";
+    card.dataset.gameId = game.id;
+
+    card.innerHTML = `
+      <div class="game-thumb-wrapper">
+        <div class="game-thumb ${game.thumbnailClass}"></div>
+        <video class="game-preview-video" muted loop preload="none">
+          <source src="${game.previewVideo}" type="video/mp4" />
+        </video>
+      </div>
+      <div class="game-info">
+        <h3>${game.title}</h3>
+        <p>${game.description}</p>
+        <div class="game-meta">
+          <div class="game-rating">
+            <span class="game-stars">${renderStars(game.rating)}</span>
+            <span>${game.rating.toFixed(1)}</span>
+          </div>
+          <div class="game-plays">${formatPlays(game.plays)}</div>
+        </div>
+        <div class="game-tags">
+          ${game.tags.map((t) => `<span class="tag">${t}</span>`).join("")}
+        </div>
+      </div>
+    `;
+
+    attachGameCardEvents(card, game);
+    gamesGrid.appendChild(card);
   });
 }
 
-attachTilt(".hero-card");
-attachTilt(".game-card");
-attachTilt(".game-viewer");
-attachTilt(".helper-card");
-attachTilt(".about-card");
-attachTilt(".contact-form");
+renderGames();
 
-// Game previews & embeds
+// ===== Filters =====
+filterButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const type = btn.dataset.filter;
+    currentFilter = type || "all";
+    filterButtons.forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    renderGames();
+  });
+});
+
+// ===== Search =====
+if (gameSearchInput) {
+  gameSearchInput.addEventListener("input", () => {
+    currentSearch = gameSearchInput.value.trim().toLowerCase();
+    renderGames();
+  });
+}
+
+// ===== Viewer & fullscreen =====
 const gameFrame = document.getElementById("game-frame");
 const viewerTitle = document.getElementById("viewer-title");
 const openNewTabBtn = document.getElementById("open-new-tab");
-const gameCards = document.querySelectorAll(".run-game");
+const fullscreenBtn = document.getElementById("fullscreen-game");
 
-let currentGameUrl = null;
+function loadGameInViewer(game) {
+  if (!gameFrame || !viewerTitle || !openNewTabBtn || !fullscreenBtn) return;
 
-if (gameFrame && viewerTitle && openNewTabBtn && gameCards.length) {
-  gameCards.forEach((card) => {
-    card.addEventListener("click", () => {
-      const url = card.dataset.url;
-      currentGameUrl = url || null;
+  document.body.classList.add("lab-launch");
+  setTimeout(() => document.body.classList.remove("lab-launch"), 250);
 
-      document.body.classList.add("lab-launch");
-      setTimeout(() => document.body.classList.remove("lab-launch"), 250);
+  viewerTitle.textContent = game.title;
+  currentGameUrl = game.url;
 
-      const titleEl = card.querySelector("h3");
-      viewerTitle.textContent = titleEl ? titleEl.textContent : "Game preview";
+  gameFrame.innerHTML = "";
+  const iframe = document.createElement("iframe");
+  iframe.src = game.url;
+  iframe.setAttribute("allowfullscreen", "true");
+  gameFrame.appendChild(iframe);
 
-      if (url) {
-        gameFrame.innerHTML = "";
-        const iframe = document.createElement("iframe");
-        iframe.src = url;
-        gameFrame.appendChild(iframe);
-        openNewTabBtn.disabled = false;
-      } else {
-        gameFrame.innerHTML =
-          "<p class='viewer-placeholder'>No URL set for this game yet. Edit the HTML to add one.</p>";
-        openNewTabBtn.disabled = true;
-      }
-    });
+  openNewTabBtn.disabled = false;
+  fullscreenBtn.disabled = false;
+
+  // Fake: bump play count locally
+  game.plays += 1;
+  renderGames();
+}
+
+// Attach click + hover video to each card
+function attachGameCardEvents(card, game) {
+  // click to load viewer
+  card.addEventListener("click", () => {
+    loadGameInViewer(game);
   });
 
+  // preview video on hover (desktop)
+  const thumb = card.querySelector(".game-thumb");
+  const video = card.querySelector(".game-preview-video");
+  if (!thumb || !video) return;
+
+  card.addEventListener("mouseenter", () => {
+    video.style.display = "block";
+    thumb.style.display = "none";
+    if (video.readyState >= 2) {
+      video.currentTime = 0;
+      video.play().catch(() => {});
+    }
+  });
+
+  card.addEventListener("mouseleave", () => {
+    video.pause();
+    video.style.display = "none";
+    thumb.style.display = "block";
+  });
+}
+
+if (openNewTabBtn) {
   openNewTabBtn.addEventListener("click", () => {
     if (!currentGameUrl) return;
     window.open(currentGameUrl, "_blank");
   });
 }
 
-// Game filters
-const filterButtons = document.querySelectorAll(".filter-btn");
-const gamesGrid = document.getElementById("games-grid");
-if (gamesGrid && filterButtons.length) {
-  const allGames = gamesGrid.querySelectorAll(".game-card");
-  filterButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const type = btn.dataset.filter;
-      filterButtons.forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
+if (fullscreenBtn) {
+  fullscreenBtn.addEventListener("click", () => {
+    if (!gameFrame) return;
+    const iframe = gameFrame.querySelector("iframe");
+    if (!iframe || !iframe.requestFullscreen) return;
 
-      allGames.forEach((card) => {
-        const cardType = card.dataset.type;
-        card.style.display = type === "all" || cardType === type ? "" : "none";
-      });
-    });
+    iframe.requestFullscreen().then(() => {
+      const hint = document.createElement("div");
+      hint.className = "fullscreen-hint";
+      hint.textContent = "Press Esc to exit full screen";
+      document.body.appendChild(hint);
+      setTimeout(() => hint.remove(), 2500);
+    }).catch(() => {});
   });
 }
 
-// Homework helper: tasks
+// ===== Featured "Play now" button =====
+const playFeaturedBtn = document.getElementById("play-featured");
+if (playFeaturedBtn) {
+  playFeaturedBtn.addEventListener("click", () => {
+    const featured = gamesData[0];
+    if (!featured) return;
+    smoothScrollTo("#games");
+    loadGameInViewer(featured);
+  });
+}
+
+// ===== Popular chips (optional: if you add them in HTML) =====
+document.querySelectorAll(".games-chip").forEach((chip) => {
+  chip.addEventListener("click", () => {
+    const name = chip.textContent.trim().toLowerCase();
+    const game = gamesData.find((g) => g.title.toLowerCase() === name);
+    if (!game) return;
+    smoothScrollTo("#games");
+    loadGameInViewer(game);
+  });
+});
+
+// ===== Homework helper: tasks =====
 const taskInput = document.getElementById("task-input");
 const addTaskBtn = document.getElementById("add-task");
 const taskList = document.getElementById("task-list");
@@ -283,16 +387,18 @@ if (taskInput && addTaskBtn && taskList) {
   });
 }
 
-// Homework helper: timer
+// ===== Homework helper: timer + streak =====
 const timerMinutes = document.getElementById("timer-minutes");
 const timerDisplay = document.getElementById("timer-display");
 const startTimerBtn = document.getElementById("start-timer");
 const resetTimerBtn = document.getElementById("reset-timer");
+const streakCounter = document.getElementById("streak-counter");
 
 let timerInterval = null;
 let remainingSeconds = 0;
+let streak = 0;
 
-if (timerMinutes && timerDisplay && startTimerBtn && resetTimerBtn) {
+if (timerMinutes && timerDisplay && startTimerBtn && resetTimerBtn && streakCounter) {
   function updateTimerDisplay() {
     const mins = String(Math.floor(remainingSeconds / 60)).padStart(2, "0");
     const secs = String(remainingSeconds % 60).padStart(2, "0");
@@ -310,6 +416,8 @@ if (timerMinutes && timerDisplay && startTimerBtn && resetTimerBtn) {
         clearInterval(timerInterval);
         timerInterval = null;
         timerDisplay.textContent = "Done!";
+        streak++;
+        streakCounter.textContent = `Streak: ${streak}`;
       }
     }, 1000);
   });
@@ -322,7 +430,7 @@ if (timerMinutes && timerDisplay && startTimerBtn && resetTimerBtn) {
   });
 }
 
-// Homework helper: tips
+// ===== Homework helper: tips =====
 const tipsList = document.getElementById("tips-list");
 if (tipsList) {
   const tips = [
@@ -345,7 +453,7 @@ if (tipsList) {
   showRandomTips();
 }
 
-// Hint helper (pseudo‑AI)
+// ===== Hint helper (pseudo‑AI) =====
 const hwInput = document.getElementById("hw-input");
 const hwHelpBtn = document.getElementById("hw-help");
 const hwOutput = document.getElementById("hw-output");
@@ -437,7 +545,43 @@ if (hwInput && hwHelpBtn && hwOutput) {
   });
 }
 
-// Fake contact form handler
+// ===== Ideas voting =====
+const ideaButtons = document.querySelectorAll(".idea-vote");
+const ideasTotalEl = document.getElementById("ideas-total");
+const topIdeaEl = document.getElementById("top-idea");
+const ideaVotes = {};
+let totalVotes = 0;
+
+ideaButtons.forEach((btn) => {
+  const key = btn.dataset.idea;
+  ideaVotes[key] = 0;
+
+  btn.addEventListener("click", () => {
+    ideaVotes[key]++;
+    totalVotes++;
+
+    btn.textContent = `+1 Vote (${ideaVotes[key]})`;
+
+    let best = "None yet";
+    let bestVotes = 0;
+    Object.entries(ideaVotes).forEach(([k, v]) => {
+      if (v > bestVotes) {
+        bestVotes = v;
+        best = btn.closest(".ideas-grid")
+          ? document.querySelector(`.idea-vote[data-idea="${k}"]`)
+              ?.parentElement.querySelector("h3")?.textContent || k
+          : k;
+      }
+    });
+
+    if (ideasTotalEl && topIdeaEl) {
+      topIdeaEl.textContent = best;
+      ideasTotalEl.firstChild.textContent = `Total votes: ${totalVotes} | Most popular: `;
+    }
+  });
+});
+
+// ===== Fake contact form =====
 const form = document.getElementById("contact-form");
 const statusEl = document.getElementById("form-status");
 
@@ -453,7 +597,7 @@ if (form && statusEl) {
   });
 }
 
-// Footer year
+// ===== Footer year =====
 const yearEl = document.getElementById("year");
 if (yearEl) {
   yearEl.textContent = new Date().getFullYear();
