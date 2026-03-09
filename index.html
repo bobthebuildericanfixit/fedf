@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
-<body class="theme-dark">
+<body>
   <!-- Custom cursor -->
   <div class="cursor-dot" id="cursor-dot"></div>
   <div class="cursor-ring" id="cursor-ring"></div>
@@ -37,13 +37,10 @@
         <a href="#hero" class="nav-link active">Home</a>
         <a href="#games" class="nav-link">Games</a>
         <a href="#helper" class="nav-link">Homework</a>
+        <a href="#ideas" class="nav-link">Ideas</a>
         <a href="#about" class="nav-link">About</a>
         <a href="#contact" class="nav-link">Contact</a>
       </nav>
-      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-        <span class="theme-icon theme-dark">Dark</span>
-        <span class="theme-icon theme-light">Light</span>
-      </button>
       <button class="nav-menu" id="nav-menu">
         <span></span><span></span><span></span>
       </button>
@@ -54,6 +51,7 @@
       <a href="#hero" class="nav-link">Home</a>
       <a href="#games" class="nav-link">Games</a>
       <a href="#helper" class="nav-link">Homework</a>
+      <a href="#ideas" class="nav-link">Ideas</a>
       <a href="#about" class="nav-link">About</a>
       <a href="#contact" class="nav-link">Contact</a>
     </nav>
@@ -84,8 +82,8 @@
             </div>
             <div class="stat-card">
               <span class="stat-label">Homework tools</span>
-              <span class="stat-value">3</span>
-              <span class="stat-foot">Tasks, timer, hints</span>
+              <span class="stat-value">5</span>
+              <span class="stat-foot">Tasks, timer, hints, ideas</span>
             </div>
             <div class="stat-card">
               <span class="stat-label">Audience</span>
@@ -93,18 +91,8 @@
               <span class="stat-foot">Free time & breaks</span>
             </div>
           </div>
-
-          <!-- Theme controls -->
-          <div class="theme-controls">
-            <span>Accent color:</span>
-            <button class="accent-swatch" data-accent="#7b5cff"></button>
-            <button class="accent-swatch" data-accent="#22c55e"></button>
-            <button class="accent-swatch" data-accent="#f97316"></button>
-            <button class="accent-swatch" data-accent="#e11d48"></button>
-          </div>
         </div>
 
-        <!-- HERO SIDE -->
         <div class="hero-panel">
           <div class="hero-grid">
             <div class="hero-card">
@@ -131,88 +119,66 @@
       <section id="games" class="section games">
         <div class="section-header">
           <p class="section-kicker">Games</p>
-          <h2>K.I.N.G game library.</h2>
+          <h2>K.I.N.G game hub.</h2>
           <p class="section-subtitle">
-            A gaming‑site style grid. Hook each card up to your own hosted games or external links.
+            Search, filter, and preview games like a mini CrazyGames, then play them in the built‑in player.
           </p>
         </div>
 
-        <div class="games-filters">
-          <button class="filter-btn active" data-filter="all">All</button>
-          <button class="filter-btn" data-filter="chill">Chill</button>
-          <button class="filter-btn" data-filter="arcade">Arcade</button>
-          <button class="filter-btn" data-filter="puzzle">Puzzle</button>
+        <!-- Featured banner -->
+        <div class="featured-game">
+          <div class="featured-info">
+            <span class="featured-tag">Featured</span>
+            <h3 id="featured-title">Neon Runner</h3>
+            <p id="featured-desc">
+              Speed‑runner with tight controls and leaderboard‑ready gameplay.
+            </p>
+            <button class="btn small" id="play-featured">Play now</button>
+          </div>
+          <div class="featured-thumb"></div>
+        </div>
+
+        <!-- Search + categories row -->
+        <div class="games-topbar">
+          <div class="games-search">
+            <input
+              type="text"
+              id="game-search"
+              placeholder="Search games..."
+              autocomplete="off"
+            />
+          </div>
+          <div class="games-filters" id="games-filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="arcade">Arcade</button>
+            <button class="filter-btn" data-filter="puzzle">Puzzle</button>
+            <button class="filter-btn" data-filter="chill">Chill</button>
+            <button class="filter-btn" data-filter="io">.io</button>
+            <button class="filter-btn" data-filter="sports">Sports</button>
+          </div>
         </div>
 
         <div class="games-layout">
-          <div class="games-grid" id="games-grid">
-            <!-- Example game cards; change data-url to real URLs -->
-            <article class="game-card run-game"
-              data-game="runner" data-type="arcade"
-              data-url="https://example.com/games/neon-runner">
-              <div class="game-thumb game-thumb-1"></div>
-              <div class="game-info">
-                <h3>Neon Runner</h3>
-                <p>Fast endless runner—dodge obstacles and beat the clock.</p>
-                <div class="game-meta">
-                  <span class="tag">Arcade</span>
-                  <span class="tag">Reflex</span>
-                </div>
-              </div>
-            </article>
+          <!-- Game cards are generated by JS into this grid -->
+          <div class="games-grid" id="games-grid"></div>
 
-            <article class="game-card run-game"
-              data-game="stack" data-type="puzzle"
-              data-url="https://example.com/games/pixel-stack">
-              <div class="game-thumb game-thumb-2"></div>
-              <div class="game-info">
-                <h3>Pixel Stack</h3>
-                <p>Time your drops to build a perfectly stacked tower.</p>
-                <div class="game-meta">
-                  <span class="tag">Puzzle</span>
-                  <span class="tag">Timing</span>
-                </div>
-              </div>
-            </article>
-
-            <article class="game-card run-game"
-              data-game="chill" data-type="chill"
-              data-url="https://example.com/games/space-idle">
-              <div class="game-thumb game-thumb-3"></div>
-              <div class="game-info">
-                <h3>Space Idle</h3>
-                <p>Idle galaxy builder you can check between homework tasks.</p>
-                <div class="game-meta">
-                  <span class="tag">Chill</span>
-                  <span class="tag">Idle</span>
-                </div>
-              </div>
-            </article>
-
-            <article class="game-card run-game"
-              data-game="memory" data-type="puzzle"
-              data-url="https://example.com/games/memory-match">
-              <div class="game-thumb game-thumb-4"></div>
-              <div class="game-info">
-                <h3>Memory Match</h3>
-                <p>Flip cards, track positions, and beat your last score.</p>
-                <div class="game-meta">
-                  <span class="tag">Puzzle</span>
-                  <span class="tag">Memory</span>
-                </div>
-              </div>
-            </article>
-          </div>
-
+          <!-- Viewer -->
           <div class="game-viewer">
             <div class="viewer-header">
-              <h3 id="viewer-title">Select a game to preview</h3>
-              <button id="open-new-tab" class="btn small viewer-btn" disabled>Open in new tab</button>
+              <h3 id="viewer-title">Select a game to play</h3>
+              <div class="viewer-actions">
+                <button id="fullscreen-game" class="btn small viewer-btn" disabled>
+                  Fullscreen
+                </button>
+                <button id="open-new-tab" class="btn small viewer-btn" disabled>
+                  Open in new tab
+                </button>
+              </div>
             </div>
             <div class="viewer-embed" id="game-frame">
               <p class="viewer-placeholder">
-                Click a game card to load it here. Replace the data‑url values in the HTML
-                with your own game links or self‑hosted files.
+                Click a game card to load it here. Replace the game URLs and preview
+                video links in <code>script.js</code> with your own.
               </p>
             </div>
           </div>
@@ -241,7 +207,7 @@
             <ul id="task-list" class="task-list"></ul>
           </div>
 
-          <!-- Timer & tips -->
+          <!-- Timer & streak -->
           <div class="helper-card">
             <h3>Focus timer</h3>
             <p class="helper-text">
@@ -258,6 +224,7 @@
               <button id="reset-timer" class="btn small">Reset</button>
             </div>
             <div class="timer-display" id="timer-display">00:00</div>
+            <div class="streak-counter" id="streak-counter">Streak: 0</div>
 
             <h3 class="tips-title">Study tips</h3>
             <ul class="tips-list" id="tips-list"></ul>
@@ -273,6 +240,58 @@
             <button id="hw-help" class="btn small hw-btn">Get hints</button>
             <div id="hw-output" class="hw-output"></div>
           </div>
+        </div>
+      </section>
+
+      <!-- IDEAS -->
+      <section id="ideas" class="section ideas">
+        <div class="section-header">
+          <p class="section-kicker">Future</p>
+          <h2>5 killer ideas for K.I.N.G.</h2>
+          <p class="section-subtitle">
+            Vote on what you want next. These would make K.I.N.G even better for students.
+          </p>
+        </div>
+
+        <div class="ideas-grid">
+          <div class="idea-card">
+            <div class="idea-number">1</div>
+            <h3>Quick Math Solver</h3>
+            <p>Camera scan → instant step‑by‑step solution + explanation. No cheating, just learning.</p>
+            <button class="idea-vote" data-idea="math">+1 Vote (0)</button>
+          </div>
+
+          <div class="idea-card">
+            <div class="idea-number">2</div>
+            <h3>Flashcard Maker</h3>
+            <p>Paste notes → auto flashcard deck. Spaced repetition with game-like scoring.</p>
+            <button class="idea-vote" data-idea="flashcards">+1 Vote (0)</button>
+          </div>
+
+          <div class="idea-card">
+            <div class="idea-number">3</div>
+            <h3>Session Timer</h3>
+            <p>Work 25min → game 5min → work 25min. Automatic, blocks games until work is done.</p>
+            <button class="idea-vote" data-idea="session">+1 Vote (0)</button>
+          </div>
+
+          <div class="idea-card">
+            <div class="idea-number">4</div>
+            <h3>Mini Leaderboards</h3>
+            <p>Your high scores + friends (local or anonymous). Makes homework streaks competitive.</p>
+            <button class="idea-vote" data-idea="leaderboard">+1 Vote (0)</button>
+          </div>
+
+          <div class="idea-card">
+            <div class="idea-number">5</div>
+            <h3>Essay Outline Bot</h3>
+            <p>Paste essay prompt → instant outline with sources to research. No writing for you.</p>
+            <button class="idea-vote" data-idea="essay">+1 Vote (0)</button>
+          </div>
+        </div>
+
+        <div class="ideas-total" id="ideas-total">
+          Total votes: 0 | Most popular: <span id="top-idea">None yet</span>
         </div>
       </section>
 
